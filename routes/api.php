@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Wamesro\LaravelMagentoVariantGenerator\Http\Controllers\Tool;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/endpoint', function (Request $request) {
 //     //
 // });
+
+Route::post('/create',         Tool::class . '@create');
+Route::get('/get',         Tool::class . '@get');

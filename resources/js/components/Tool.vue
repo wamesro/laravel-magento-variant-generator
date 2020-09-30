@@ -45,10 +45,12 @@
         </card>
         <hr>
         <card
-            class="flex flex-row"
+            class="flex flex-col items-center justify-center"
             style="min-height: 300px;padding: 2em;"
         >
-            <h4>Tu nahrajte potlače</h4>
+            <h3>{{ __('Tu nahrajte vzory') }}</h3>
+            <br>
+            <Upload :mockups="selectedMockups"/>
         </card>
     </div>
     </template>
@@ -56,10 +58,12 @@
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
+import Upload from './Upload';
 
 export default {
     components: {
-        vSelect
+        vSelect,
+        Upload
     },
     data() {
         return {
@@ -104,7 +108,7 @@ export default {
         },
         setMockup(event, productId, index) {
             if (event === null) {
-                this.productImages[index] = null;
+                delete this.productImages[index];
                 this.$forceUpdate();
                 return;
             }

@@ -17,9 +17,6 @@ class LaravelMagentoVariantGenerator extends Tool
         Nova::script('laravel-magento-variant-generator', __DIR__.'/../dist/js/tool.js');
         Nova::style('laravel-magento-variant-generator', __DIR__.'/../dist/css/tool.css');
 
-        Nova::script('nova-media-library', __DIR__.'/../dist/js/tool.js');
-        Nova::style('nova-media-library', __DIR__.'/../dist/css/tool.css');
-
         Nova::provideToScript([ 'novaMediaLibrary' => $this->config() ]);
     }
 
