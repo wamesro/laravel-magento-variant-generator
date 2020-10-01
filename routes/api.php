@@ -20,4 +20,5 @@ use Wamesro\LaravelMagentoVariantGenerator\Http\Controllers\Tool;
 // });
 
 Route::post('/create',         Tool::class . '@create');
-Route::get('/get',         Tool::class . '@get');
+Route::post('/{id}/patterns/append',         Tool::class . '@appendPatterns');
+Route::get('/get/{id}',         Tool::class . '@get');

@@ -2,6 +2,18 @@
     <div>
         <heading class="mb-6">Laravel Magento Variant Generator</heading>
 
+        <div class="flex" style="">
+            <div class="relative h-9 flex-no-shrink mb-6">
+            </div>
+                <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
+                    <button class="btn btn-default btn-primary"
+                            :disabled="selectedMockups.map(x => x !== null ? x.id : null).filter(function (el) {return el != null;}) < 1 || disabledButton === true"
+                            @click="submitForm">
+                    {{ __('Add patterns') }}
+                    </button>
+                </div>
+            </div>
+        </div>
         <card
             class="flex flex-row"
             style="min-height: 300px;padding: 2em;"
@@ -43,27 +55,16 @@
                 ></v-select>
             </card>
         </card>
-        <hr>
-        <card
-            class="flex flex-col items-center justify-center"
-            style="min-height: 300px;padding: 2em;"
-        >
-            <h3>{{ __('Tu nahrajte vzory') }}</h3>
-            <br>
-            <Upload :mockups="selectedMockups"/>
-        </card>
     </div>
     </template>
 
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
-import Upload from './Upload';
 
 export default {
     components: {
-        vSelect,
-        Upload
+        vSelect
     },
     data() {
         return {
@@ -72,6 +73,7 @@ export default {
             mockupImages: [],
             productImages: [],
             selectedMockups: [],
+            disabledButton: false
         }
     },
     mounted() {
@@ -118,6 +120,21 @@ export default {
             let mockupImages = this.mockupImages.find(x => x.mainId === productId).items;
             this.productImages[index] = mockupImages.find(x => x.id === mockupId).title;
             this.$forceUpdate();
+        },
+        submitForm() {
+            this.disabledButton = true;
+            let formData = new FormData();
+            formData.append('mockups', this.selectedMockups.map(x => x !== null ? x.id : null).filter(function (el) {return el != null;}));
+            const config = {
+                headers:{'Content-Type' : 'multipart/form-data'}
+            };
+            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/create', formData, config)
+                .then(response => {
+                    if (response.data.status === 200) {
+                        this.$toasted.show('Step 2: Add patterns', { type: 'success' });
+                        this.$router.push('/laravel-magento-variant-generator-upload/'+response.data.id);
+                    }
+            });
         }
     }
 }
