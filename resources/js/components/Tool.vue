@@ -1,7 +1,13 @@
 <template>
     <div>
-        <heading class="mb-6">Laravel Magento Variant Generator</heading>
+        <h1 class="mb-3 text-90 font-normal text-2xl">{{ __('Laravel Magento Variant Generator') }}</h1>
 
+        <card
+            style="width: 100%; height: 50px; margin-bottom: 1em; display: none"
+            class="bg-primary"
+        >
+
+        </card>
         <div class="flex" style="">
             <div class="relative h-9 flex-no-shrink mb-6">
             </div>
