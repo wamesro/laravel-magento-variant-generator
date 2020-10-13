@@ -20,5 +20,10 @@ Nova.booting((Vue, router, store) => {
             path: '/laravel-magento-variant-generator-place-patterns/:id',
             component: require('./components/PlacePatterns'),
         },
-    ])
-})
+        {
+            name: 'laravel-magento-variant-generator',
+            path: '/laravel-magento-variant-generator-generate/:id',
+            component: require('./components/Generate'),
+        },
+    ]);
+});

@@ -1,12 +1,55 @@
 <template>
     <div>
-        <h1 class="mb-3 text-90 font-normal text-2xl">{{ __('Laravel Magento Variant Generator') }}</h1>
+        <h1 class="mb-3 text-90 font-normal text-2xl">{{ __('Product Configurator') }}</h1>
 
         <card
-            style="width: 100%; height: 50px; margin-bottom: 1em; display: none"
-            class="bg-primary"
+            v-for="draft in drafts"
+            :key="draft.id"
+            style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 1em;
+            width: 100%;
+            min-height: 50px;
+            margin-bottom: 1em;
+            background-color: white;"
         >
-
+            <h3 style="text-align: center;">
+                <span v-for="productTitle in draft.products">
+                    {{ productTitle }} <br>
+                </span>
+            </h3>
+            <div style="margin: 1em;">
+                <img v-for="pattern in draft.patterns" :src="pattern"
+                     style="
+                    width: 64px;
+                    height: 64px;
+                    object-fit: contain;
+                    background-color: #e3e7eb;
+                    ">
+            </div>
+            <div class="buttons">
+                <button
+                    class="btn btn-primary"
+                    style="
+                    border-radius: 15px;
+                    margin: .3em;
+                    padding: 0.5em;
+                    "
+                    @click="$router.push(draft.url)"
+                >Pokračovať v úprave</button>
+                <button
+                    class="btn btn-primary"
+                    style="
+                    border-radius: 15px;
+                    margin: .3em;
+                    padding: 0.5em;
+                    "
+                    @click="removeItem(draft.id)
+                    ">Zahodiť</button>
+            </div>
         </card>
         <div class="flex" style="">
             <div class="relative h-9 flex-no-shrink mb-6">
@@ -22,8 +65,9 @@
         </div>
         <card
             class="flex flex-row"
-            style="min-height: 300px;padding: 2em;"
+            style="min-height: 300px;padding: 2em; flex-wrap: wrap;"
         >
+            <Skeleton v-if="productList.length < 1" width="20em" height="10em" count="4"/>
             <card
                 class="bg-50 flex flex-col justify-center"
                 style="width: 20em; padding: 1em; margin: 1em;"
@@ -40,15 +84,16 @@
                         height: 200px;
                         object-fit: cover;"
                 >
-                <img
+                <span
                     v-else
-                    src="http://placehold.it/250x250"
                     style="
-                        max-width: 100%;
-                        width: 100%;
-                        height: 200px;
-                        object-fit: cover;"
+                    width: 100%;
+                    height: 10px;
+                    background-color: #e3e7eb;
+                    "
                 >
+                </span>
+                <Skeleton v-if="mockupList.length < 1" height="30px" width="90%"/>
                 <v-select
                     v-if="mockupList.length > 0"
                     style="margin-top: 1em"
@@ -67,10 +112,12 @@
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
+import { Skeleton } from 'vue-loading-skeleton';
 
 export default {
     components: {
-        vSelect
+        vSelect,
+        Skeleton
     },
     data() {
         return {
@@ -79,15 +126,27 @@ export default {
             mockupImages: [],
             productImages: [],
             selectedMockups: [],
-            disabledButton: false
+            disabledButton: false,
+            drafts: [],
         }
     },
     mounted() {
+        this.getStates();
         this.getProductList();
     },
     methods: {
         getIndex(list, id) {
             return list.findIndex((e) => e.id.value == id);
+        },
+        getStates() {
+            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/getstates')
+                .then(
+                    (response) => {
+                        this.drafts = response.data;
+                    },
+                    (error) => {
+                        console.log(error);
+                    });
         },
         getProductList() {
             Nova.request().get('/nova-api/products').then(response => {
@@ -137,15 +196,27 @@ export default {
             Nova.request().post('/nova-vendor/laravel-magento-variant-generator/create', formData, config)
                 .then(response => {
                     if (response.data.status === 200) {
-                        this.$toasted.show('Step 2: Add patterns', { type: 'success' });
+                        this.$toasted.show('Krok 2: Nahrajte vzory', { type: 'success' });
                         this.$router.push('/laravel-magento-variant-generator-upload/'+response.data.id);
                     }
             });
+        },
+        removeItem(id) {
+            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/delete/' + id)
+                .then(response => {
+                    if (response.data.status === 200) {
+                        this.$toasted.show('Deleted', { type: 'success' });
+                        this.getStates();
+                    }
+                });
         }
     }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 /* Scoped Styles */
+/deep/ .pu-skeleton {
+    margin: 1em;
+}
 </style>

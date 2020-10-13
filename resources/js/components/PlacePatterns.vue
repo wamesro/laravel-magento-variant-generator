@@ -1,19 +1,30 @@
 <template>
     <div>
-        <h1 class="mb-3 text-90 font-normal text-2xl">{{ __('Laravel Magento Variant Generator') }}</h1>
         <div class="flex" style="">
             <div class="relative h-9 flex-no-shrink mb-6">
+                <h1 class="text-90 font-normal text-2xl">
+                    <button @click="$router.push('/laravel-magento-variant-generator-variants/'+ $route.params.id)" class="no-underline text-primary font-bold dim router-link-active" >←</button>
+                    <span class="px-2 text-70">/</span> {{ __('Variants') }}
+                </h1>
             </div>
             <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
-                <button class="btn btn-default btn-primary" @click="getPlacePatternsData">
-
-                </button>
+                <button class="btn btn-default btn-primary" @click="$router.push('/laravel-magento-variant-generator-generate/'+$route.params.id);">{{ __('Generate') }}</button>
             </div>
             </div>
         </div>
         <card
             class="place-pattern-card-wrapper"
         >
+            <div class="skeletons" v-if="mockups.length <1">
+                <Skeleton width="120px" height="10px" />
+                <Skeleton width="600px" height="600px" />
+                <Skeleton width="600px" height="30px" />
+            </div>
+            <div class="skeletons" v-if="mockups.length <1">
+                <Skeleton width="120px" height="10px" />
+                <Skeleton width="600px" height="600px" />
+                <Skeleton width="600px" height="30px" />
+            </div>
             <FabricPattern
                 v-for="mockup in mockups"
                 :mockup="mockup"
@@ -25,10 +36,12 @@
 
 <script>
     import FabricPattern from './parts/FabricPattern';
+    import { Skeleton } from 'vue-loading-skeleton';
 
     export default {
         components: {
-            FabricPattern
+            FabricPattern,
+            Skeleton
         },
         data: () => ({
             mockups: []
@@ -56,5 +69,18 @@
         align-items: center;
         display: flex;
         flex-wrap: wrap;
+    }
+    .skeletons {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 50px;
+        &:last-child {
+            margin-left: 2em;
+        }
+        /deep/ .pu-skeleton {
+            &:last-child {
+                margin-top: 10px;
+            }
+        }
     }
 </style>

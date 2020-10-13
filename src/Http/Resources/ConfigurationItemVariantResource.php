@@ -42,9 +42,10 @@ class ConfigurationItemVariantResource extends JsonResource
             'updated_at' => $this->updated_at,
             // Custom
             'id' => $this->id,
-            'enabled' => $this->enabled === 1 ? true : false,
+            'enabled' => $this->enabled === 1 ? 1 : 0,
             'image' => API::getFiles($mockupColor->image, $imgSize = 'thumb'),
             'color' => Color::find($mockupColor->color_id)->name,
+            'final_image' => $this->final_image ? API::getFiles($this->final_image) : null,
             'pattern' => [
                 'basename' => basename($this->pattern),
                 'url' => Storage::url($this->pattern)

@@ -1,12 +1,15 @@
 <template>
     <div>
-        <h1 class="mb-3 text-90 font-normal text-2xl">{{ __('Laravel Magento Variant Generator') }}</h1>
         <div class="flex" style="">
             <div class="relative h-9 flex-no-shrink mb-6">
+                <h1 class="text-90 font-normal text-2xl">
+                    <button @click="$router.push('/laravel-magento-variant-generator')" class="no-underline text-primary font-bold dim router-link-active" >←</button>
+                    <span class="px-2 text-70">/</span> {{ __('Main Page') }}
+                </h1>
             </div>
             <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
                 <button class="btn btn-default btn-primary"
-                        :disabled="configuratorImages.length < 1"
+                        :disabled="configuratorImages.length < 1 || queue.length > 0"
                         @click="createVariants">
                     {{ __('Variants') }}
                 </button>
@@ -22,11 +25,13 @@
                 id="dropzone"
                 :options="dropzoneOptions"
                 :useCustomSlot=true
-                v-on:vdropzone-success="attachPattern"
-                v-on:vdropzone-removed-file="removePattern">
-                <div class="dropzone-custom-content">
+                v-on:vdropzone-success="attachPattern">
+                <div class="dropzone-custom-content" v-if="!uploadInitLoading">
                     <h3 class="dropzone-custom-title">{{ __('Presuňte sem súbory myšou') }}</h3>
                     <div class="subtitle">...{{ __('alebo kliknite a vyberte súbory z počítača') }}</div>
+                </div>
+                <div class="dropzone-custom-content" v-if="uploadInitLoading">
+                    <h3 class="dropzone-custom-title">{{ __('Počkajte prosím...') }}</h3>
                 </div>
             </vue-dropzone>
         </card>
@@ -45,7 +50,6 @@
             dropzoneOptions: {
                 url: "https://httpbin.org/post",
                 thumbnailWidth: 150,
-                maxFilesize: 0.5,
                 addRemoveLinks: true,
                 headers: {'Content-Type' : 'multipart/form-data'}
             },
@@ -57,7 +61,9 @@
             },
             configuratorImages: [],
             variantsButton: [],
-            disableRemove: false
+            disableRemove: false,
+            uploadInitLoading: true,
+            queue: []
         }),
         mounted() {
             this.$refs.myVueDropzone.disable();
@@ -76,6 +82,7 @@
                     });
             },
             attachPattern(file, response) {
+                this.queue.push(Date.now());
                 const formData = new FormData();
                 formData.append('file', file);
                 const config = {
@@ -87,6 +94,7 @@
                         config)
                     .then(response => {
                         this.configuratorImages.push(file.name);
+                        this.queue.pop();
                     });
             },
             removePattern(file, error, xhr) {
@@ -111,6 +119,7 @@
                             this.configuratorImages.push(file.name);
                         });
                         this.$refs.myVueDropzone.enable();
+                        this.uploadInitLoading = false;
                     });
             },
             createVariants() {
