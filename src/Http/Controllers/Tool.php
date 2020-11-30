@@ -6,6 +6,8 @@ use App\ConfiguratorItem;
 use App\ConfiguratorItemVariant;
 use App\Exports\MagentoProductsExport;
 use App\Http\Resources\ProductResource;
+use App\Jobs\CreateMagentoProducts;
+use App\MagentoProduct;
 use App\Mockup;
 use App\MockupColor;
 use App\Product;
@@ -303,36 +305,29 @@ class Tool {
     public function exportReady($id) {
         $item = ConfiguratorItem::find($id);
 
-        if ($item->state == ConfiguratorItem::STATE_EXPORT_PROCESS) {
+        if (ConfiguratorItem::find($id)->state == ConfiguratorItem::STATE_EDIT_PATTERNS) {
+            $variants = ConfiguratorItemVariant::where('configurator_item_id', $item->id)->pluck('id','id');
+            foreach ($variants as $variant) {
+                $this->resultImage($variant);
+            }
+            $item->state = ConfiguratorItem::STATE_EXPORT_READY;
+            $item->save();
             return response([
-                'status' => ConfiguratorItem::STATE_EXPORT_PROCESS,
+                'status' => (int) ConfiguratorItem::find($id)->state,
                 'id' => $item->id,
                 'variants' => ConfigurationItemVariantResource::collection(ConfiguratorItemVariant::where('configurator_item_id', $item->id)->get())
             ]);
         }
 
-        if ($item->state == ConfiguratorItem::STATE_EXPORT_SUCCESS) {
-            return response([
-                'status' => ConfiguratorItem::STATE_EXPORT_SUCCESS,
-                'id' => $item->id,
-                'variants' => ConfigurationItemVariantResource::collection(ConfiguratorItemVariant::where('configurator_item_id', $item->id)->get())
-            ]);
+        if (ConfiguratorItem::find($id)->state == ConfiguratorItem::STATE_EXPORT_READY) {
+            // Run export job
+            CreateMagentoProducts::dispatch();
         }
-
-        $variants = ConfiguratorItemVariant::where('configurator_item_id', $item->id)->pluck('id','id');
-        foreach ($variants as $variant) {
-            $this->resultImage($variant);
-        }
-
-        $variants = ConfiguratorItemVariant::where('configurator_item_id', $item->id)->get();
-
-        $item->state = ConfiguratorItem::STATE_EXPORT_READY;
-        $item->save();
 
         return response([
-            'status' => ConfiguratorItem::STATE_EXPORT_READY,
+            'status' => (int) ConfiguratorItem::find($id)->state,
             'id' => $item->id,
-            'variants' => ConfigurationItemVariantResource::collection($variants)
+            'variants' => ConfigurationItemVariantResource::collection(ConfiguratorItemVariant::where('configurator_item_id', $item->id)->get())
         ]);
     }
 
@@ -374,7 +369,7 @@ class Tool {
 
         $angle = -$angle;
 
-        $patternImage = Image::make($pattern)->resize(intval($scaleX)*2, intval($scaleY)*2)->rotate($angle);
+        $patternImage = Image::make($pattern)->resize(intval($scaleX)*2, intval($scaleY)*2)->rotate($angle)->opacity(floatval($position['opacity']*100));
         $img->insert($patternImage, 'top-left', intval($left)*2, intval($top)*2);
 
         $imagePath = 'patterns/'.$variant->configurator_item_id.'/'.basename($variant->pattern).'-final-'.time().'.png';
@@ -390,10 +385,110 @@ class Tool {
     }
 
     public function getCsv($id) {
-        $name = 'export-'.date('d. m. Y. H:i:s').'.csv';
+        $variantsCount = MagentoProduct::whereIn('configuration_item_id', $id)->count();
+        $name = 'export-'.$variantsCount.'-products-'.date('d_m_Y-H_i_s').'.csv';
         $item = ConfiguratorItem::find($id);
-        return Excel::download(new MagentoProductsExport($item), $name);
+        return Excel::download(new MagentoProductsExport($item->id), $name);
     }
 
+    public function setMainProduct($id, Request $request) {
+        $item = ConfiguratorItem::find($id);
+
+        $arr = $request->all();
+        unset($arr['main_configurator_item_variant_id']);
+
+        $mainTitles = [];
+        foreach ($arr as $key => $string) {
+            if (Str::contains($key, ['main_configurator_item_title_'])) {
+                $language = strtolower(str_replace('main_configurator_item_title_', '', $key));
+                if (!isset($mainTitles['main_configurator_item_title'])) $mainTitles['main_configurator_item_title'] = [];
+                if ($string == null || $string == 'null') $string = null;
+                $mainTitles['main_configurator_item_title'] += [$language => $string];
+            }
+            if (Str::contains($key, ['main_configurator_item_description_'])) {
+                $language = strtolower(str_replace('main_configurator_item_description_', '', $key));
+                if (!isset($mainTitles['main_configurator_item_description'])) $mainTitles['main_configurator_item_description'] = [];
+                if ($string == null || $string == 'null') $string = null;
+                $mainTitles['main_configurator_item_description'] += [$language => $string];
+            }
+            if (Str::contains($key, ['configurator_item_variants_description_'])) {
+                $language = strtolower(str_replace('configurator_item_variants_description_', '', $key));
+                if (!isset($mainTitles['configurator_item_variants_description'])) $mainTitles['configurator_item_variants_description'] = [];
+                if ($string == null || $string == 'null') $string = null;
+                $mainTitles['configurator_item_variants_description'] += [$language => $string];
+            }
+        }
+
+
+
+        $item->main_configurator_item_variant_id = $request->main_configurator_item_variant_id;
+        $item->main_configurator_item_title = \GuzzleHttp\json_encode($mainTitles['main_configurator_item_title']);
+        $item->main_configurator_item_description = \GuzzleHttp\json_encode($mainTitles['main_configurator_item_description']);
+        $item->configurator_item_variants_description = \GuzzleHttp\json_encode($mainTitles['configurator_item_variants_description']);
+        $item->save();
+    }
+
+    public function setMainProductImages($id, Request $request) {
+        $item = ConfiguratorItem::find($id);
+
+        if ($item->main_configurator_item_additional_images == null) {
+            $images = [];
+        } else {
+            $images = \GuzzleHttp\json_decode($item->main_configurator_item_additional_images);
+        }
+
+        $filename = Str::slug(pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME), '-');
+        $extension = pathinfo($request->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $filename .= '.' . $extension;
+
+        $newPath = $request->file->storeAs('main/'.$id.'/', $filename);
+        $images[] = $newPath;
+
+        $item->main_configurator_item_additional_images = \GuzzleHttp\json_encode($images);
+        $item->save();
+    }
+
+    public function deleteMainProductImages($id, Request $request) {
+        $item = ConfiguratorItem::find($id);
+
+        if ($item->main_configurator_item_additional_images == null) {
+            $images = [];
+        } else {
+            $images = json_decode($item->main_configurator_item_additional_images, true);
+        }
+
+        foreach ($images as $key => $image) {
+            if ($request->filename == basename($image)) {
+                unset($images[$key]);
+            }
+        }
+
+        $item->main_configurator_item_additional_images = json_encode($images);
+        $item->save();
+    }
+
+    public function getMainProductImages($id) {
+        $configurationItem = ConfiguratorItem::find($id);
+
+        if ($configurationItem->main_configurator_item_additional_images == null) {
+            $patterns = [];
+        } else {
+            $patterns = \GuzzleHttp\json_decode($configurationItem->main_configurator_item_additional_images);
+        }
+
+        $links = [];
+        foreach ($patterns as $pattern) {
+            $url = Storage::url($pattern);
+            $extension = pathinfo($url, PATHINFO_EXTENSION);
+            $links[] = [
+                'url' => Storage::url($pattern),
+                'mimetype' => $extension == 'png' ? 'image/png' : 'image/jpeg',
+                'size' => Storage::size($pattern),
+                'name' => basename($pattern)
+            ];
+        }
+
+        return response($links);
+    }
 
 }

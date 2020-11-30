@@ -29,6 +29,7 @@ Route::post('/delete/{id}',         Tool::class . '@delete');
 Route::post('/{id}/patterns/append',         Tool::class . '@appendPatterns');
 Route::post('/{id}/patterns/delete',         Tool::class . '@deletePatterns');
 Route::get('/{id}/patterns/get',         Tool::class . '@getPatterns');
+Route::get('/{id}/makeFinalImages',         Tool::class . '@makeFinalImages');
 // Variants
 Route::post('/{id}/variants/create',         Tool::class . '@createVariants');
 Route::get('/{id}/variants/get',         Tool::class . '@getVariants');
@@ -37,6 +38,11 @@ Route::post('/{variantId}/pattern/change',         Tool::class . '@changePattern
 Route::get('/{id}/variants/get/place_patterns',         Tool::class . '@getPlacePatternsData');
 Route::post('/{id}/variants/set/pattern_position',         Tool::class . '@setPatternPosition');
 Route::get('/{variantId}/get/siblings',         Tool::class . '@getVariantSiblings');
+// Main Product
+Route::post('/{id}/set/main',         Tool::class . '@setMainProduct');
+Route::post('/{id}/setimages/main',         Tool::class . '@setMainProductImages');
+Route::post('/{id}/deleteimages/main',         Tool::class . '@deleteMainProductImages');
+Route::get('/{id}/getimages/main',         Tool::class . '@getMainProductImages');
 // Export
 Route::post('/export_ready/{id}',         Tool::class . '@exportReady');
 Route::get('/csv/{id}',         Tool::class . '@getCsv');

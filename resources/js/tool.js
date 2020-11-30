@@ -22,6 +22,11 @@ Nova.booting((Vue, router, store) => {
         },
         {
             name: 'laravel-magento-variant-generator',
+            path: '/laravel-magento-variant-generator-main-product/:id',
+            component: require('./components/MainProduct'),
+        },
+        {
+            name: 'laravel-magento-variant-generator',
             path: '/laravel-magento-variant-generator-generate/:id',
             component: require('./components/Generate'),
         },

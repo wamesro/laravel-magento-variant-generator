@@ -8,7 +8,7 @@
                 </h1>
             </div>
             <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
-                <button class="btn btn-default btn-primary" @click="$router.push('/laravel-magento-variant-generator-generate/'+$route.params.id);">{{ __('Generate') }}</button>
+                <button class="btn btn-default btn-primary" @click="setPatterns">{{ __('Main Product') }}</button>
             </div>
             </div>
         </div>
@@ -56,6 +56,9 @@
                     .then(response => {
                         this.mockups = response.data;
                     });
+            },
+            setPatterns() {
+                this.$router.push('/laravel-magento-variant-generator-main-product/'+this.$route.params.id);
             }
         }
     }

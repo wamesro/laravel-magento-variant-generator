@@ -17,22 +17,27 @@
             :options="siblings"
             v-model="selectBox"
         ></v-select>
+        <vue-range-slider ref="slider" v-on:drag-end="changeOpacity" v-model="opacity"></vue-range-slider>
     </card>
 </template>
 
 <script>
     import { fabric } from 'fabric';
     import vSelect from 'vue-select';
+    import 'vue-range-component/dist/vue-range-slider.css'
+    import VueRangeSlider from 'vue-range-component'
 
     export default {
         components: {
-            vSelect
+            vSelect,
+            VueRangeSlider
         },
         data() {
             return {
                 siblings: [],
                 selectBox: [],
-                canvas: []
+                canvas: [],
+                opacity: 0
             }
         },
         props: {
@@ -58,6 +63,7 @@
         methods: {
             changePosition(event) {
                 let object = event.target;
+
                 if (object === null) {
                     return false;
                 }
@@ -74,8 +80,14 @@
                 formData.append('lineCoords_br', object.lineCoords.br);
                 formData.append('lineCoords_tl', object.lineCoords.tl);
                 formData.append('lineCoords_tr', object.lineCoords.tr);
+                formData.append('opacity', this.opacity / 100);
+
+                object.set({
+                    opacity: this.opacity/100
+                });
 
                 this.mockup.position = JSON.stringify({
+                    opacity: this.opacity / 100,
                     angle: object.angle,
                     left: object.left,
                     top: object.top,
@@ -114,7 +126,8 @@
                         let img1 = myImg.set({
                             left: 0,
                             top: 0,
-                            centeredScaling: true
+                            centeredScaling: true,
+                            opacity: 1
                         });
                         img1.scaleToWidth(300);
                         img1.setControlsVisibility({mt: false, mb: false, ml: false, mr: false,});
@@ -130,10 +143,12 @@
                         } else canvas.add(img1);
                     } else  {
                         let patternPosition = JSON.parse(self.mockup.position);
+                        self.opacity = patternPosition.opacity*100;
                         let img1 = myImg.set({
                             left: parseInt(patternPosition.left),
                             top: parseInt(patternPosition.top),
                             angle: parseInt(patternPosition.angle),
+                            opacity: parseFloat(patternPosition.opacity),
                             centeredScaling: true
                         });
                         img1.scaleToWidth(parseInt(patternPosition.scaleX));
@@ -159,6 +174,7 @@
                     }
                 });
                 canvas.on('mouse:up', (e) => this.changePosition(e));
+                canvas.on('object:modified', (e) => this.changePosition(e));
             },
             getSiblings() {
                 Nova.request()
@@ -167,8 +183,43 @@
                         this.siblings = response.data;
                         this.selectBox = this.siblings.find(x => x.id === this.mockup.id);
                     });
+            },
+            changeOpacity() {
+                let canvas = this.canvas;
+                let obj = canvas.getObjects()[0];
+                obj.set({
+                    opacity: this.opacity/100
+                });
+                canvas.renderAll();
+
+                let newData = JSON.parse(this.mockup.position);
+                newData.opacity = this.opacity/100;
+
+
+                const formData = new FormData();
+                formData.append('mockup_id', this.mockup.mockup_id);
+                formData.append('angle', newData.angle);
+                formData.append('left', newData.left);
+                formData.append('top', newData.top);
+                formData.append('scaleX', newData.scaleX);
+                formData.append('scaleY', newData.scaleY);
+                formData.append('lineCoords_bl', newData.lineCoords_bl);
+                formData.append('lineCoords_br', newData.lineCoords_br);
+                formData.append('lineCoords_tl', newData.lineCoords_tl);
+                formData.append('lineCoords_tr', newData.lineCoords_tr);
+                formData.append('opacity', newData.opacity);
+
+                const config = {
+                    headers:{'Content-Type' : 'multipart/form-data'}
+                };
+                Nova.request()
+                    .post('/nova-vendor/laravel-magento-variant-generator/'+this.$route.params.id+'/variants/set/pattern_position',
+                        formData,
+                        config)
+                    .then(response => {
+                    });
             }
-        }
+        },
     }
 </script>
 

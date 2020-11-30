@@ -2,32 +2,27 @@
     <div>
         <div class="flex" style="">
             <div class="relative h-9 flex-no-shrink mb-6">
+                <h1 class="text-90 font-normal text-2xl">
+                    <button @click="$router.push('/laravel-magento-variant-generator-main-product/'+$route.params.id);" class="no-underline text-primary font-bold dim router-link-active" >←</button>
+                    <span class="px-2 text-70">/</span> {{ __('Main Product') }}
+                </h1>
             </div>
             <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
-                <button class="btn btn-default btn-primary" @click="exportReady">{{ __('Main Page') }}</button>
+                <button class="btn btn-default btn-primary">{{ __('New Product') }}</button>
             </div>
             </div>
         </div>
         <card
             class="generating-wrapper"
         >
-            <span v-if="status === ''">
-                <h1 class="text-center">{{ __('Počkajte prosím') }}</h1>
-                <Skeleton/>
-            </span>
-
-            <span v-if="status === 5">
-                <h1 class="text-center">{{ __('Produkty boli pridané do zoznamu na vygenerovanie') }}</h1>
-                <h3 class="text-center">{{ __('Stránku môžete bezpečne opustiť. Notifikujeme Vás, keď budú produkty vygenerované.') }}</h3>
-            </span>
-            <span  v-if="status === 6">
-                <h1 class="text-center">{{ __('Produkty čakajú na vygenerovanie') }}</h1>
-                <h3 class="text-center">{{ __('Stránku môžete bezpečne opustiť. Notifikujeme Vás, keď budú produkty vygenerované.') }}</h3>
-            </span>
             <span v-if="status === 7" class="text-center">
-                <h1 class="text-center">{{ __('Produkty už boli vygenerované') }}</h1>
+                <h1 class="text-center">{{ __('Produkty boli vygenerované') }}</h1>
                 <h3 class="text-center">{{ __('Stránku môžete bezpečne opustiť. CSV súbor si môžete stiahnúť tu.') }}</h3>
                 <button class="btn btn-primary" style="text-align: center;padding: 1em;margin: 1em;border-radius: 15px;" @click="downloadCsv">{{ __('Stiahnúť CSV') }}</button>
+            </span>
+            <span v-else>
+                <h1 class="text-center">{{ __('Produkty zaradené do exportu') }}</h1>
+                <Skeleton/>
             </span>
         </card>
         <card
@@ -50,10 +45,12 @@
         data: () => ({
             variants: [],
             status: '',
-            download: ''
+            download: '',
+            enableRefresh: false
         }),
         mounted() {
             this.exportReady();
+            setInterval(() => this.refresh(), 1000);
         },
         methods: {
             exportReady() {
@@ -62,21 +59,25 @@
                     .then(response => {
                         this.status = response.data.status;
                         if (response.data.status === 5) {
-                            this.$toasted.show('Produkty boli pridané do zoznamu na vygenerovanie', { type: 'success' });
-                            this.variants = response.data.variants;
+                            this.enableRefresh = true;
                         }
                         if (response.data.status === 6) {
-                            this.$toasted.show('Produkty už čakajú na vygenerovanie', { type: 'info' });
-                            this.variants = response.data.variants;
+                            this.$toasted.show('Prebieha generovanie produktov.. Prosím čakajte', { type: 'info' });
+                            this.enableRefresh = true;
                         }
                         if (response.data.status === 7) {
-                            this.$toasted.show('Produkty už boli úspešne vygenerované', { type: 'info' });
-                            this.variants = response.data.variants;
+                            this.enableRefresh = false;
                         }
+                        this.variants = response.data.variants;
                     });
             },
             downloadCsv() {
                 this.download = window.location.origin + '/nova-vendor/laravel-magento-variant-generator/csv/' + this.$route.params.id;
+            },
+            refresh() {
+                if (this.enableRefresh === true) {
+                    this.exportReady();
+                }
             }
         }
     }
