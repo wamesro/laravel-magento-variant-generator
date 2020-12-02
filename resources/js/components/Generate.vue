@@ -15,7 +15,7 @@
         <card
             class="generating-wrapper"
         >
-            <span v-if="status === 7" class="text-center">
+            <span v-if="status === 11" class="text-center">
                 <h1 class="text-center">{{ __('Produkty boli vygenerované') }}</h1>
                 <h3 class="text-center">{{ __('Stránku môžete bezpečne opustiť. CSV súbor si môžete stiahnúť tu.') }}</h3>
                 <button class="btn btn-primary" style="text-align: center;padding: 1em;margin: 1em;border-radius: 15px;" @click="downloadCsv">{{ __('Stiahnúť CSV') }}</button>
@@ -50,7 +50,7 @@
         }),
         mounted() {
             this.exportReady();
-            setInterval(() => this.refresh(), 1000);
+            setInterval(() => this.refresh(), 10000);
         },
         methods: {
             exportReady() {
@@ -58,17 +58,24 @@
                     .post('/nova-vendor/laravel-magento-variant-generator/export_ready/' + this.$route.params.id)
                     .then(response => {
                         this.status = response.data.status;
-                        if (response.data.status === 5) {
+                        if (this.status === 4) {
+                            this.$toasted.show('Products added to queue. You can leave this page right now.', { type: 'info' });
                             this.enableRefresh = true;
+                            this.variants = [];
                         }
-                        if (response.data.status === 6) {
-                            this.$toasted.show('Prebieha generovanie produktov.. Prosím čakajte', { type: 'info' });
+                        if (this.status === 5 || this.status === 6 || this.status === 7 || this.status === 8 || this.status === 9) {
+                            this.$toasted.show('Product generating... We will notify you, when the products will be ready.', { type: 'info' });
                             this.enableRefresh = true;
+                            this.variants = [];
                         }
-                        if (response.data.status === 7) {
+                        if (this.status === 10) {
                             this.enableRefresh = false;
+                            this.variants = response.data.variants;
                         }
-                        this.variants = response.data.variants;
+                        if (this.status === 11) {
+                            this.enableRefresh = false;
+                            this.variants = response.data.variants;
+                        }
                     });
             },
             downloadCsv() {

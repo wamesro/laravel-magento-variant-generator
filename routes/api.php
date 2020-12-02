@@ -36,6 +36,7 @@ Route::get('/{id}/variants/get',         Tool::class . '@getVariants');
 Route::get('/{id}/variants/get/products',         Tool::class . '@getVariantsProducts');
 Route::post('/{variantId}/pattern/change',         Tool::class . '@changePattern');
 Route::get('/{id}/variants/get/place_patterns',         Tool::class . '@getPlacePatternsData');
+Route::get('/{id}/variants/set/main_info',         Tool::class . '@setMainProductInfo');
 Route::post('/{id}/variants/set/pattern_position',         Tool::class . '@setPatternPosition');
 Route::get('/{variantId}/get/siblings',         Tool::class . '@getVariantSiblings');
 // Main Product

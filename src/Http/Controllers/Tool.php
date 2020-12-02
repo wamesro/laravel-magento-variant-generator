@@ -6,7 +6,8 @@ use App\ConfiguratorItem;
 use App\ConfiguratorItemVariant;
 use App\Exports\MagentoProductsExport;
 use App\Http\Resources\ProductResource;
-use App\Jobs\CreateMagentoProducts;
+use App\Jobs\CreateMainProduct;
+use App\Jobs\ProcessProduct;
 use App\MagentoProduct;
 use App\Mockup;
 use App\MockupColor;
@@ -225,7 +226,7 @@ class Tool {
         $mockupId = $request->mockup_id;
         $data = $request->all();
         unset($data['mockup_id']);
-        ConfiguratorItemVariant::where(['configurator_item_id' => $id, 'mockup_id' => $mockupId])->update(['position' => \GuzzleHttp\json_encode($data)]);
+        ConfiguratorItemVariant::where(['configurator_item_id' => $id, 'mockup_id' => $mockupId])->update(['position' => \GuzzleHttp\json_encode($data), 'state' => ConfiguratorItemVariant::STATE_READY]);
     }
 
     public function getVariantSiblings($variantId) {
@@ -305,23 +306,9 @@ class Tool {
     public function exportReady($id) {
         $item = ConfiguratorItem::find($id);
 
-        if (ConfiguratorItem::find($id)->state == ConfiguratorItem::STATE_EDIT_PATTERNS) {
-            $variants = ConfiguratorItemVariant::where('configurator_item_id', $item->id)->pluck('id','id');
-            foreach ($variants as $variant) {
-                $this->resultImage($variant);
-            }
+        if ($item->state == ConfiguratorItem::STATE_EDIT_PATTERNS) {
             $item->state = ConfiguratorItem::STATE_EXPORT_READY;
             $item->save();
-            return response([
-                'status' => (int) ConfiguratorItem::find($id)->state,
-                'id' => $item->id,
-                'variants' => ConfigurationItemVariantResource::collection(ConfiguratorItemVariant::where('configurator_item_id', $item->id)->get())
-            ]);
-        }
-
-        if (ConfiguratorItem::find($id)->state == ConfiguratorItem::STATE_EXPORT_READY) {
-            // Run export job
-            CreateMagentoProducts::dispatch();
         }
 
         return response([
@@ -329,63 +316,11 @@ class Tool {
             'id' => $item->id,
             'variants' => ConfigurationItemVariantResource::collection(ConfiguratorItemVariant::where('configurator_item_id', $item->id)->get())
         ]);
-    }
 
-    public function resultImage($variantId) {
-        $variant = ConfiguratorItemVariant::find($variantId);
-
-        $background = Storage::disk('public')->get(API::getFiles(MockupColor::find($variant->color_id)->image, null, true)->path);
-        $pattern = Storage::disk('public')->get($variant->pattern);
-
-        $img = Image::make($background)
-            ->resize(566*2, 566*2);
-
-        $position = json_decode($variant->position, true);
-
-        $scaleX = $position['scaleX'];
-        $scaleY = $position['scaleY'];
-        $top = $position['top'];
-        $left = $position['left'];
-        $angle = $position['angle'];
-
-        if ($angle > 0 && $angle <= 90) {
-            $left = explode(',', $position['lineCoords_bl'])[0];
-        }
-
-        if ($angle > 90 && $angle <= 180) {
-            $top = explode(',', $position['lineCoords_bl'])[1];
-            $left = $position['lineCoords_br'];
-        }
-
-        if ($angle > 180 && $angle <= 270) {
-            $top = explode(',', $position['lineCoords_br'])[1];
-            $left = explode(',', $position['lineCoords_tr'])[0];
-        }
-
-        if ($angle > 270 && $angle <= 360) {
-            $top = explode(',', $position['lineCoords_tr'])[1];
-            $left = $position['left'];
-        }
-
-        $angle = -$angle;
-
-        $patternImage = Image::make($pattern)->resize(intval($scaleX)*2, intval($scaleY)*2)->rotate($angle)->opacity(floatval($position['opacity']*100));
-        $img->insert($patternImage, 'top-left', intval($left)*2, intval($top)*2);
-
-        $imagePath = 'patterns/'.$variant->configurator_item_id.'/'.basename($variant->pattern).'-final-'.time().'.png';
-
-        $img->save(storage_path('app/public/'.$imagePath));
-
-        $image = API::upload($img->basePath(), '/products/');
-
-        Storage::delete($imagePath);
-
-        $variant->final_image = $image->id;
-        $variant->save();
     }
 
     public function getCsv($id) {
-        $variantsCount = MagentoProduct::whereIn('configuration_item_id', $id)->count();
+        $variantsCount = MagentoProduct::where('configuration_item_id', $id)->count();
         $name = 'export-'.$variantsCount.'-products-'.date('d_m_Y-H_i_s').'.csv';
         $item = ConfiguratorItem::find($id);
         return Excel::download(new MagentoProductsExport($item->id), $name);
@@ -489,6 +424,41 @@ class Tool {
         }
 
         return response($links);
+    }
+
+    public function setMainProductInfo($id) {
+        $item = ConfiguratorItem::find($id);
+
+        if ($item->main_configurator_item_title == null) {
+            $title = [
+                'sk' => null,
+                'cz' => null,
+                'hu' => null,
+                'ro' => null,
+            ];
+            $item->main_configurator_item_title = \GuzzleHttp\json_encode($title);
+        }
+
+        if ($item->main_configurator_item_description == null) {
+            $description = [
+                'sk' => $item->variants()->first()->mockup->product->description,
+                'cz' => null,
+                'hu' => null,
+                'ro' => null,
+            ];
+            $item->main_configurator_item_description = \GuzzleHttp\json_encode($description);
+        }
+
+        if ($item->configurator_item_variants_description == null) {
+            $variantsDescription = [
+                'sk' => null,
+                'cz' => null,
+                'hu' => null,
+                'ro' => null,
+            ];
+            $item->configurator_item_variants_description = \GuzzleHttp\json_encode($variantsDescription);
+        }
+        $item->save();
     }
 
 }

@@ -58,7 +58,7 @@
                     });
             },
             setPatterns() {
-                this.$router.push('/laravel-magento-variant-generator-main-product/'+this.$route.params.id);
+                this.$router.push('/laravel-magento-variant-generator-main-product/'+this.$route.params.id+'?forceRefresh=true');
             }
         }
     }

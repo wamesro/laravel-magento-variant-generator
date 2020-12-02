@@ -1,139 +1,147 @@
 <template>
     <div>
-        <div class="flex" style="">
-            <div class="relative h-9 flex-no-shrink mb-6">
-                <h1 class="text-90 font-normal text-2xl">
-                    <button @click="goBack()" class="no-underline text-primary font-bold dim router-link-active" >←</button>
-                    <span class="px-2 text-70">/</span> {{ __('Place Patterns') }}
-                </h1>
-            </div>
-            <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
-                <button class="btn btn-default btn-primary" @click="setMainProduct()">{{ __('Generate') }}</button>
-            </div>
-            </div>
+        <div v-if="hideAll">
+            <card class="main-product-creating">
+                <h1>{{ __('Generating main product options') }}</h1>
+                <h2>{{ __('please wait...') }}</h2>
+            </card>
         </div>
-        <card class="languages-select" >
-            <Skeleton v-if="!mainProduct.title" width="3em" height="2em" count="4"/>
-            <div class="input" v-for="(language, index) in languages" :key="language" v-if="mainProduct.title">
-                <input
-                    type="checkbox"
-                    class="checkbox"
-                    :checked="selectedLanguages[language]"
-                    v-model="selectedLanguages[language]"
-                >
-                <span class="text-uppercase">
+        <div v-else>
+            <div class="flex" style="">
+                <div class="relative h-9 flex-no-shrink mb-6">
+                    <h1 class="text-90 font-normal text-2xl">
+                        <button @click="goBack()" class="no-underline text-primary font-bold dim router-link-active" >←</button>
+                        <span class="px-2 text-70">/</span> {{ __('Place Patterns') }}
+                    </h1>
+                </div>
+                <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
+                    <button class="btn btn-default btn-primary" @click="setMainProduct()">{{ __('Generate') }}</button>
+                </div>
+                </div>
+            </div>
+            <card class="languages-select" >
+                <Skeleton v-if="!mainProduct.title" width="3em" height="2em" count="4"/>
+                <div class="input" v-for="(language, index) in languages" :key="language" v-if="mainProduct.title">
+                    <input
+                        type="checkbox"
+                        class="checkbox"
+                        :checked="selectedLanguages[language]"
+                        v-model="selectedLanguages[language]"
+                    >
+                    <span class="text-uppercase">
                     {{ language.toUpperCase() }}
                 </span>
-            </div>
-        </card>
-        <hr>
-        <card class="place-pattern-card-wrapper">
-            <Skeleton v-if="!mainProduct.title" width="100%" height="5em" count="4"/>
-            <div class="language" v-for="(language, index) in languages" :key="language" v-if="mainProduct.title">
-                <card class="main-product-languages" v-if="selectedLanguages[language]">
-                    <div class="card-checkbox">
-                        <input
-                            type="checkbox"
-                            class="checkbox"
-                            :checked="selectedLanguages[language]"
-                            v-model="selectedLanguages[language]"
-                        >
-                    </div>
-                    <div class="card-content">
-                        <h3>{{ __('Main Product Title') }} {{ language }}</h3>
-                        <input type="text" v-model="mainProduct.title[language]" :placeholder="__('Main Product Title')" class="form-control form-input form-input-bordered">
-                        <div class="mt-3">
-                            <h3>{{ __('Main Product Description') }} {{ language }}</h3>
-                            <trix-editor
-                                :ref="'mainDesctiptionEditor' + language"
-                                @keydown.stop
-                                :value="mainProduct.mainDescription[language]"
-                                :placeholder="__('Main Product Description') + ' in ' + language"
-                                class="trix-content"
-                                @trix-change="handleChange('mainDesctiptionEditor' + language, mainProduct.mainDescription[language])"
-                                @trix-initialize="initialize('mainDesctiptionEditor' + language, mainProduct.mainDescription[language])"
-                                @trix-attachment-add="handleAddFile"
-                                @trix-attachment-remove="handleRemoveFile"
-                                @trix-file-accept="handleFileAccept"
-                            />
-                        </div>
-                        <div class="mt-3">
-                            <h3>{{ __('Variants Description') }} {{ language }}</h3>
-                            <trix-editor
-                                :ref="'variantDescriptionEditor' + language"
-                                @keydown.stop
-                                :value="mainProduct.variantDescription[language]"
-                                :placeholder="__('Variants Description') + ' in ' + language"
-                                class="trix-content"
-                                @trix-change="handleChange('variantDescriptionEditor' + language, mainProduct.variantDescription[language])"
-                                @trix-initialize="initialize('variantDescriptionEditor' + language, mainProduct.variantDescription[language])"
-                                @trix-attachment-add="handleAddFile"
-                                @trix-attachment-remove="handleRemoveFile"
-                                @trix-file-accept="handleFileAccept"
-                            />
-                        </div>
-                    </div>
-                </card>
-                <hr>
-            </div>
-            <h3 class="mt-2 mb-2">{{ __('Main product preview image') }}</h3>
-
-            <Skeleton v-if="!products[0]" height="2em" count="1"/>
-            <Skeleton v-if="!products[0]" width="200px" height="200px" count="1"/>
-            <v-select
-                v-if="products[0]"
-                style="display: block"
-                label="title"
-                index="id"
-                :placeholder="__('Select variant')"
-                :options="products"
-                v-model="mainVariantId"
-                :value="products[0]"
-            ></v-select>
-            <div class="card" v-if="selectedVariant.img && products[0]" style="width: 200px; height: 200px">
-                <img :src="selectedVariant.img">
-            </div>
+                </div>
+            </card>
             <hr>
-            <h3>{{ __('Additional main product images') }}</h3>
-            <vue-dropzone
-                ref="myVueDropzone"
-                id="dropzone"
-                :options="dropzoneOptions"
-                :useCustomSlot=true
-                v-on:vdropzone-success="attachPattern"
-                v-on:vdropzone-removed-file="removePattern">
-                <div class="dropzone-custom-content" v-if="!uploadInitLoading">
-                    <h3 class="dropzone-custom-title">{{ __('Presuňte sem súbory myšou') }}</h3>
-                    <div class="subtitle">...{{ __('alebo kliknite a vyberte súbory z počítača') }}</div>
+            <card class="place-pattern-card-wrapper">
+                <Skeleton v-if="!showInputs" width="100%" height="5em" count="4"/>
+                <div class="language" v-for="(language, index) in languages" :key="language" v-if="showInputs">
+                    <card class="main-product-languages" v-if="selectedLanguages[language]">
+                        <div class="card-checkbox">
+                            <input
+                                type="checkbox"
+                                class="checkbox"
+                                :checked="selectedLanguages[language]"
+                                v-model="selectedLanguages[language]"
+                            >
+                        </div>
+                        <div class="card-content">
+                            <h3>{{ __('Main Product Title') }} {{ language }}</h3>
+                            <input type="text" v-model="mainProduct.title[language]" :placeholder="__('Main Product Title')" class="form-control form-input form-input-bordered">
+                            <div class="mt-3">
+                                <h3>{{ __('Main Product Description') }} {{ language }}</h3>
+                                <trix-editor
+                                    :ref="'mainDesctiptionEditor' + language"
+                                    @keydown.stop
+                                    :value="mainProduct.mainDescription[language]"
+                                    :placeholder="__('Main Product Description') + ' in ' + language"
+                                    class="trix-content"
+                                    @trix-change="handleChange('mainDesctiptionEditor' + language, mainProduct.mainDescription[language])"
+                                    @trix-initialize="initialize('mainDesctiptionEditor' + language, mainProduct.mainDescription[language])"
+                                    @trix-attachment-add="handleAddFile"
+                                    @trix-attachment-remove="handleRemoveFile"
+                                    @trix-file-accept="handleFileAccept"
+                                />
+                            </div>
+                            <div class="mt-3">
+                                <h3>{{ __('Variants Description') }} {{ language }}</h3>
+                                <trix-editor
+                                    :ref="'variantDescriptionEditor' + language"
+                                    @keydown.stop
+                                    :value="mainProduct.variantDescription[language]"
+                                    :placeholder="__('Variants Description') + ' in ' + language"
+                                    class="trix-content"
+                                    @trix-change="handleChange('variantDescriptionEditor' + language, mainProduct.variantDescription[language])"
+                                    @trix-initialize="initialize('variantDescriptionEditor' + language, mainProduct.variantDescription[language])"
+                                    @trix-attachment-add="handleAddFile"
+                                    @trix-attachment-remove="handleRemoveFile"
+                                    @trix-file-accept="handleFileAccept"
+                                />
+                            </div>
+                        </div>
+                    </card>
+                    <hr>
                 </div>
-                <div class="dropzone-custom-content" v-if="uploadInitLoading">
-                    <h3 class="dropzone-custom-title">{{ __('Počkajte prosím...') }}</h3>
+                <h3 class="mt-2 mb-2">{{ __('Main product preview image') }}</h3>
+
+                <Skeleton v-if="!products[0]" height="2em" count="1"/>
+                <Skeleton v-if="!products[0]" width="200px" height="200px" count="1"/>
+                <v-select
+                    v-if="products[0]"
+                    style="display: block"
+                    label="title"
+                    index="id"
+                    :placeholder="__('Select variant')"
+                    :options="products"
+                    v-model="mainVariantId"
+                    :value="products[0]"
+                ></v-select>
+                <div class="card" v-if="selectedVariant.img && products[0]" style="width: 200px; height: 200px">
+                    <img :src="selectedVariant.img">
                 </div>
-            </vue-dropzone>
-            <h3 class="mt-3 mb-2">{{ __(':hover effect') }}</h3>
-            <vue-dropzone
-                ref="myVueDropzone2"
-                id="hovereffect"
-                :options="dropzone2Options"
-                :useCustomSlot=true
-                v-on:vdropzone-success="console.log('ok')"
-                v-on:vdropzone-removed-file="console.log('ok')">
-                <div class="dropzone-custom-content" v-if="!uploadInitLoading">
-                    <h3 class="dropzone-custom-title">{{ __('Presuňte sem súbor myšou') }}</h3>
-                    <div class="subtitle">...{{ __('alebo kliknite a vyberte súbor z počítača v prípade, že chcete pridať hover efekt.') }}</div>
+                <hr>
+                <h3>{{ __('Additional main product images') }}</h3>
+                <vue-dropzone
+                    ref="myVueDropzone"
+                    id="dropzone"
+                    :options="dropzoneOptions"
+                    :useCustomSlot=true
+                    v-on:vdropzone-success="attachPattern"
+                    v-on:vdropzone-removed-file="removePattern">
+                    <div class="dropzone-custom-content" v-if="!uploadInitLoading">
+                        <h3 class="dropzone-custom-title">{{ __('Presuňte sem súbory myšou') }}</h3>
+                        <div class="subtitle">...{{ __('alebo kliknite a vyberte súbory z počítača') }}</div>
+                    </div>
+                    <div class="dropzone-custom-content" v-if="uploadInitLoading">
+                        <h3 class="dropzone-custom-title">{{ __('Počkajte prosím...') }}</h3>
+                    </div>
+                </vue-dropzone>
+                <h3 class="mt-3 mb-2">{{ __(':hover effect') }}</h3>
+                <vue-dropzone
+                    ref="myVueDropzone2"
+                    id="hovereffect"
+                    :options="dropzone2Options"
+                    :useCustomSlot=true
+                    v-on:vdropzone-success="console.log('ok')"
+                    v-on:vdropzone-removed-file="console.log('ok')">
+                    <div class="dropzone-custom-content" v-if="!uploadInitLoading">
+                        <h3 class="dropzone-custom-title">{{ __('Presuňte sem súbor myšou') }}</h3>
+                        <div class="subtitle">...{{ __('alebo kliknite a vyberte súbor z počítača v prípade, že chcete pridať hover efekt.') }}</div>
+                    </div>
+                    <div class="dropzone-custom-content" v-if="uploadInitLoading">
+                        <h3 class="dropzone-custom-title">{{ __('Počkajte prosím...') }}</h3>
+                    </div>
+                </vue-dropzone>
+            </card>
+            <hr>
+            <div class="flex" style="">
+                <div class="relative h-9 flex-no-shrink mb-6">
                 </div>
-                <div class="dropzone-custom-content" v-if="uploadInitLoading">
-                    <h3 class="dropzone-custom-title">{{ __('Počkajte prosím...') }}</h3>
+                <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
+                    <button class="btn btn-default btn-primary" @click="setMainProduct()">{{ __('Generate') }}</button>
                 </div>
-            </vue-dropzone>
-        </card>
-        <hr>
-        <div class="flex" style="">
-            <div class="relative h-9 flex-no-shrink mb-6">
-            </div>
-            <div class="w-full flex items-center mb-6"><div class="flex w-full justify-end items-center mx-3"></div> <div class="flex-no-shrink ml-auto">
-                <button class="btn btn-default btn-primary" @click="setMainProduct()">{{ __('Generate') }}</button>
-            </div>
+                </div>
             </div>
         </div>
     </div>
@@ -180,10 +188,28 @@
                 hu: false,
                 ro: false,
             },
-            selectedVariant: []
+            selectedVariant: [],
+            showInputs: false,
+            hideAll: true
         }),
         mounted() {
-            this.getVariants()
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            if (urlParams.get('forceRefresh')) {
+                this.hideAll = true;
+                let currentUrl = window.location.href;
+                currentUrl = this.removeURLParameter(currentUrl, 'forceRefresh');
+
+                Nova.request()
+                    .get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id +'/variants/set/main_info')
+                    .then(response => {
+                        window.location = currentUrl;
+                    });
+                return;
+            } else {
+                this.hideAll = false;
+                this.getVariants();
+            }
         },
         methods: {
             initialize(ref, value) {
@@ -294,6 +320,7 @@
                         this.mainProduct.title = title;
                         this.mainProduct.mainDescription = JSON.parse(response.data.data.main_configurator_item_description);
                         this.mainProduct.variantDescription = JSON.parse(response.data.data.configurator_item_variants_description);
+                        this.showInputs = true;
                     });
             },
             getVariants() {
@@ -328,8 +355,28 @@
                         this.getPatterns();
                         this.getMain()
                     });
+            },
+            removeURLParameter(url, parameter) {
+                //prefer to use l.search if you have a location/link object
+                var urlparts = url.split('?');
+                if (urlparts.length >= 2) {
+
+                    var prefix = encodeURIComponent(parameter) + '=';
+                    var pars = urlparts[1].split(/[&;]/g);
+
+                    //reverse iteration as may be destructive
+                    for (var i = pars.length; i-- > 0;) {
+                        //idiom for string.startsWith
+                        if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                            pars.splice(i, 1);
+                        }
+                    }
+
+                    return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+                }
+                return url;
             }
-        },
+    },
         watch: {
             mainVariantId: function (val) {
                 if (!val) return null;
@@ -403,5 +450,12 @@
     #dropzone {
         width: 100%;
         margin-top: 1em;
+    }
+    .main-product-creating {
+        height: 30em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 </style>

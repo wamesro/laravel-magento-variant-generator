@@ -17,7 +17,7 @@
             :options="siblings"
             v-model="selectBox"
         ></v-select>
-        <vue-range-slider ref="slider" v-on:drag-end="changeOpacity" v-model="opacity"></vue-range-slider>
+        <vue-range-slider class="range-slider" ref="slider" v-on:drag-end="changeOpacity" v-model="opacity"></vue-range-slider>
     </card>
 </template>
 
@@ -37,7 +37,7 @@
                 siblings: [],
                 selectBox: [],
                 canvas: [],
-                opacity: 0
+                opacity: 100
             }
         },
         props: {
@@ -192,22 +192,18 @@
                 });
                 canvas.renderAll();
 
-                let newData = JSON.parse(this.mockup.position);
-                newData.opacity = this.opacity/100;
-
-
                 const formData = new FormData();
                 formData.append('mockup_id', this.mockup.mockup_id);
-                formData.append('angle', newData.angle);
-                formData.append('left', newData.left);
-                formData.append('top', newData.top);
-                formData.append('scaleX', newData.scaleX);
-                formData.append('scaleY', newData.scaleY);
-                formData.append('lineCoords_bl', newData.lineCoords_bl);
-                formData.append('lineCoords_br', newData.lineCoords_br);
-                formData.append('lineCoords_tl', newData.lineCoords_tl);
-                formData.append('lineCoords_tr', newData.lineCoords_tr);
-                formData.append('opacity', newData.opacity);
+                formData.append('angle', obj.angle);
+                formData.append('left', obj.left);
+                formData.append('top', obj.top);
+                formData.append('scaleX', obj.getScaledWidth());
+                formData.append('scaleY', obj.getScaledHeight());
+                formData.append('lineCoords_bl', obj.lineCoords.bl);
+                formData.append('lineCoords_br', obj.lineCoords.br);
+                formData.append('lineCoords_tl', obj.lineCoords.tl);
+                formData.append('lineCoords_tr', obj.lineCoords.tr);
+                formData.append('opacity', this.opacity/100);
 
                 const config = {
                     headers:{'Content-Type' : 'multipart/form-data'}
@@ -251,5 +247,8 @@
         bottom: -45px;
         width: 100%;
         left: 0;
+    }
+    /deep/ .range-slider {
+        padding: 3px !important;
     }
 </style>

@@ -958,64 +958,6 @@ var index = {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(18);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(7)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./vue-select.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./vue-select.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1374,6 +1316,64 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(18);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(5)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./vue-select.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./vue-select.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1396,7 +1396,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(7)(content, options);
+var update = __webpack_require__(5)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1480,14 +1480,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);
-module.exports = __webpack_require__(63);
+module.exports = __webpack_require__(66);
 
 
 /***/ }),
@@ -1514,11 +1514,11 @@ Nova.booting(function (Vue, router, store) {
     }, {
         name: 'laravel-magento-variant-generator',
         path: '/laravel-magento-variant-generator-main-product/:id',
-        component: __webpack_require__(53)
+        component: __webpack_require__(56)
     }, {
         name: 'laravel-magento-variant-generator',
         path: '/laravel-magento-variant-generator-generate/:id',
-        component: __webpack_require__(58)
+        component: __webpack_require__(61)
     }]);
 });
 
@@ -1654,7 +1654,7 @@ module.exports = function listToStyles (parentId, list) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_select__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_select__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select_dist_vue_select_css__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select_dist_vue_select_css__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select_dist_vue_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_select_dist_vue_select_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_skeleton__ = __webpack_require__(4);
 //
@@ -3133,7 +3133,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(33)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(33)))
 
 /***/ }),
 /* 33 */
@@ -3585,7 +3585,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(38)
 /* template */
-var __vue_template__ = __webpack_require__(52)
+var __vue_template__ = __webpack_require__(55)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -3735,7 +3735,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         setPatterns: function setPatterns() {
-            this.$router.push('/laravel-magento-variant-generator-main-product/' + this.$route.params.id);
+            this.$router.push('/laravel-magento-variant-generator-main-product/' + this.$route.params.id + '?forceRefresh=true');
         }
     }
 });
@@ -3753,7 +3753,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(42)
 /* template */
-var __vue_template__ = __webpack_require__(51)
+var __vue_template__ = __webpack_require__(54)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -3826,7 +3826,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.fabric-library-box[data-v-65945221] {\n  width: 100%;\n  height: 100%;\n}\n.fabric-library-box-canvas[data-v-65945221] {\n    width: 100%;\n    height: 100%;\n}\n.place-pattern-card[data-v-65945221] {\n  width: 600px;\n  height: 600px;\n  padding: 1em;\n  position: relative;\n  margin: 1em 1em 5em 1em;\n}\n.place-pattern-card-title[data-v-65945221] {\n  position: absolute;\n  top: -20px;\n}\n.place-pattern-card-select[data-v-65945221] {\n  position: absolute;\n  bottom: -45px;\n  width: 100%;\n  left: 0;\n}\n", ""]);
+exports.push([module.i, "\n.fabric-library-box[data-v-65945221] {\n  width: 100%;\n  height: 100%;\n}\n.fabric-library-box-canvas[data-v-65945221] {\n    width: 100%;\n    height: 100%;\n}\n.place-pattern-card[data-v-65945221] {\n  width: 600px;\n  height: 600px;\n  padding: 1em;\n  position: relative;\n  margin: 1em 1em 5em 1em;\n}\n.place-pattern-card-title[data-v-65945221] {\n  position: absolute;\n  top: -20px;\n}\n.place-pattern-card-select[data-v-65945221] {\n  position: absolute;\n  bottom: -45px;\n  width: 100%;\n  left: 0;\n}\n[data-v-65945221] .range-slider {\n  padding: 3px !important;\n}\n", ""]);
 
 // exports
 
@@ -3841,9 +3841,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fabric___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fabric__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_select__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_range_component_dist_vue_range_slider_css__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_range_component_dist_vue_range_slider_css__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_range_component_dist_vue_range_slider_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_range_component_dist_vue_range_slider_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_range_component__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_range_component__ = __webpack_require__(53);
 //
 //
 //
@@ -3883,7 +3883,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             siblings: [],
             selectBox: [],
             canvas: [],
-            opacity: 0
+            opacity: 100
         };
     },
 
@@ -4045,21 +4045,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             canvas.renderAll();
 
-            var newData = JSON.parse(this.mockup.position);
-            newData.opacity = this.opacity / 100;
-
             var formData = new FormData();
             formData.append('mockup_id', this.mockup.mockup_id);
-            formData.append('angle', newData.angle);
-            formData.append('left', newData.left);
-            formData.append('top', newData.top);
-            formData.append('scaleX', newData.scaleX);
-            formData.append('scaleY', newData.scaleY);
-            formData.append('lineCoords_bl', newData.lineCoords_bl);
-            formData.append('lineCoords_br', newData.lineCoords_br);
-            formData.append('lineCoords_tl', newData.lineCoords_tl);
-            formData.append('lineCoords_tr', newData.lineCoords_tr);
-            formData.append('opacity', newData.opacity);
+            formData.append('angle', obj.angle);
+            formData.append('left', obj.left);
+            formData.append('top', obj.top);
+            formData.append('scaleX', obj.getScaledWidth());
+            formData.append('scaleY', obj.getScaledHeight());
+            formData.append('lineCoords_bl', obj.lineCoords.bl);
+            formData.append('lineCoords_br', obj.lineCoords.br);
+            formData.append('lineCoords_tl', obj.lineCoords.tl);
+            formData.append('lineCoords_tr', obj.lineCoords.tr);
+            formData.append('opacity', this.opacity / 100);
 
             var config = {
                 headers: { 'Content-Type': 'multipart/form-data' }
@@ -35861,7 +35858,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 45 */
@@ -36145,1522 +36142,10 @@ module.exports = Array.isArray || function (arr) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "card",
-    { staticClass: "bg-50 place-pattern-card" },
-    [
-      _c("div", { staticClass: "place-pattern-card-title" }, [
-        _c("h4", [_vm._v(_vm._s(_vm.mockup.title))])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fabric-library-box" }, [
-        _c("canvas", {
-          staticClass: "fabric-library-box-canvas",
-          attrs: { id: "canvas" + _vm.mockup.id, width: "566", height: "566" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("v-select", {
-        staticClass: "place-pattern-card-select",
-        attrs: { label: "title", options: _vm.siblings },
-        model: {
-          value: _vm.selectBox,
-          callback: function($$v) {
-            _vm.selectBox = $$v
-          },
-          expression: "selectBox"
-        }
-      }),
-      _vm._v(" "),
-      _c("vue-range-slider", {
-        ref: "slider",
-        on: { "drag-end": _vm.changeOpacity },
-        model: {
-          value: _vm.opacity,
-          callback: function($$v) {
-            _vm.opacity = $$v
-          },
-          expression: "opacity"
-        }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-65945221", module.exports)
-  }
-}
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "flex" }, [
-        _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }, [
-          _c("h1", { staticClass: "text-90 font-normal text-2xl" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "no-underline text-primary font-bold dim router-link-active",
-                on: {
-                  click: function($event) {
-                    return _vm.$router.push(
-                      "/laravel-magento-variant-generator-variants/" +
-                        _vm.$route.params.id
-                    )
-                  }
-                }
-              },
-              [_vm._v("←")]
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "px-2 text-70" }, [_vm._v("/")]),
-            _vm._v(" " + _vm._s(_vm.__("Variants")) + "\n            ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-full flex items-center mb-6" }, [
-          _c("div", {
-            staticClass: "flex w-full justify-end items-center mx-3"
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-primary",
-                on: { click: _vm.setPatterns }
-              },
-              [_vm._v(_vm._s(_vm.__("Main Product")))]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "card",
-        { staticClass: "place-pattern-card-wrapper" },
-        [
-          _vm.mockups.length < 1
-            ? _c(
-                "div",
-                { staticClass: "skeletons" },
-                [
-                  _c("Skeleton", { attrs: { width: "120px", height: "10px" } }),
-                  _vm._v(" "),
-                  _c("Skeleton", {
-                    attrs: { width: "600px", height: "600px" }
-                  }),
-                  _vm._v(" "),
-                  _c("Skeleton", { attrs: { width: "600px", height: "30px" } })
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.mockups.length < 1
-            ? _c(
-                "div",
-                { staticClass: "skeletons" },
-                [
-                  _c("Skeleton", { attrs: { width: "120px", height: "10px" } }),
-                  _vm._v(" "),
-                  _c("Skeleton", {
-                    attrs: { width: "600px", height: "600px" }
-                  }),
-                  _vm._v(" "),
-                  _c("Skeleton", { attrs: { width: "600px", height: "30px" } })
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.mockups, function(mockup) {
-            return _c("FabricPattern", {
-              key: mockup.id,
-              attrs: { mockup: mockup }
-            })
-          })
-        ],
-        2
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3bbb58a2", module.exports)
-  }
-}
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(54)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(56)
-/* template */
-var __vue_template__ = __webpack_require__(57)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-22b6864a"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/MainProduct.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-22b6864a", Component.options)
-  } else {
-    hotAPI.reload("data-v-22b6864a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(55);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("6b0655d8", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-22b6864a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainProduct.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-22b6864a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainProduct.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.languages-select[data-v-22b6864a] {\n  padding: 2em;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n.languages-select .input[data-v-22b6864a] {\n    padding: 1em;\n}\n.languages-select[data-v-22b6864a] .pu-skeleton {\n    margin-right: 1em;\n}\n.place-pattern-card-wrapper[data-v-22b6864a] {\n  min-height: 300px;\n  padding: 2em;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.place-pattern-card-wrapper input[data-v-22b6864a] {\n    width: 50%;\n}\n.place-pattern-card-wrapper .v-select[data-v-22b6864a] {\n    width: 50%;\n}\n.place-pattern-card-wrapper[data-v-22b6864a] .pu-skeleton {\n    margin-top: 1em;\n    margin-bottom: 1em;\n    display: block;\n}\n.language[data-v-22b6864a] {\n  width: 100%;\n}\n.language .main-product-languages[data-v-22b6864a] {\n    width: 70%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n}\n.language .main-product-languages .card-checkbox input[data-v-22b6864a] {\n      height: 100%;\n      width: 7em;\n}\n.language .main-product-languages .card-content[data-v-22b6864a] {\n      width: 100%;\n      padding: 2em;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n.language .main-product-languages .card-content textarea[data-v-22b6864a] {\n        height: 10em;\n}\n#dropzone[data-v-22b6864a] {\n  width: 100%;\n  margin-top: 1em;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_select__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_select_dist_vue_select_css__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_select_dist_vue_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_select_dist_vue_select_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue2_dropzone__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue2_dropzone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue2_dropzone__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue2_dropzone_dist_vue2Dropzone_min_css__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue2_dropzone_dist_vue2Dropzone_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue2_dropzone_dist_vue2Dropzone_min_css__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        Skeleton: __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__["a" /* Skeleton */],
-        vSelect: __WEBPACK_IMPORTED_MODULE_1_vue_select___default.a,
-        vueDropzone: __WEBPACK_IMPORTED_MODULE_3_vue2_dropzone___default.a
-    },
-    data: function data() {
-        return {
-            uploadInitLoading: true,
-            dropzoneOptions: {
-                url: "https://httpbin.org/post",
-                thumbnailWidth: 150,
-                addRemoveLinks: true,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            },
-            dropzone2Options: {
-                url: "https://httpbin.org/post",
-                thumbnailWidth: 150,
-                addRemoveLinks: true,
-                headers: { 'Content-Type': 'multipart/form-data' },
-                maxFiles: 1
-            },
-            mainProduct: [],
-            mainVariantId: [],
-            variants: [],
-            products: [],
-            disableRemove: false,
-            languages: ['sk', 'cz', 'hu', 'ro'],
-            selectedLanguages: {
-                sk: true,
-                cz: false,
-                hu: false,
-                ro: false
-            },
-            selectedVariant: []
-        };
-    },
-    mounted: function mounted() {
-        this.getVariants();
-    },
-
-    methods: {
-        initialize: function initialize(ref, value) {
-            this.$refs[ref][0].editor.insertHTML(value);
-
-            if (this.disabled) {
-                this.$refs[ref][0].setAttribute('contenteditable', false);
-            }
-        },
-        handleChange: function handleChange(ref, value) {
-            this.$emit('change', value);
-        },
-        handleFileAccept: function handleFileAccept(e) {
-            if (!this.withFiles) {
-                e.preventDefault();
-            }
-        },
-        handleAddFile: function handleAddFile(event) {
-            this.$emit('file-add', event);
-        },
-        handleRemoveFile: function handleRemoveFile(event) {
-            this.$emit('file-remove', event);
-        },
-        setMainProduct: function setMainProduct() {
-            var _this = this;
-
-            this.disableRemove = true;
-            var formData = new FormData();
-            formData.append('main_configurator_item_variant_id', this.mainVariantId.variant_id);
-
-            this.languages.forEach(function (language) {
-                if (!_this.selectedLanguages[language]) return;
-                _this.mainProduct.title[language] = _this.mainProduct.title[language] ? _this.mainProduct.title[language] : null;
-                formData.append('main_configurator_item_title_' + language, _this.mainProduct.title[language]);
-                formData.append('main_configurator_item_description_' + language, _this.$refs['mainDesctiptionEditor' + language][0].value);
-                formData.append('configurator_item_variants_description_' + language, _this.$refs['variantDescriptionEditor' + language][0].value);
-            });
-            var config = {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            };
-            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/set/main', formData, config).then(function (response) {
-                _this.$router.push('/laravel-magento-variant-generator-generate/' + _this.$route.params.id);
-            });
-        },
-        goBack: function goBack() {
-            this.disableRemove = true;
-            this.$router.push('/laravel-magento-variant-generator-place-patterns/' + this.$route.params.id);
-        },
-        attachPattern: function attachPattern(file, response) {
-            var formData = new FormData();
-            formData.append('file', file);
-            var config = {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            };
-            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/setimages/main', formData, config).then(function (response) {});
-        },
-        removePattern: function removePattern(file, error, xhr) {
-            var _this2 = this;
-
-            if (this.disableRemove === true) return;
-            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/deleteimages/main', {
-                filename: file.name
-            }).then(function (response) {
-                _this2.$toasted.show('File removed', { type: 'success' });
-            });
-        },
-        getPatterns: function getPatterns() {
-            var _this3 = this;
-
-            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/getimages/main').then(function (response) {
-                response.data.forEach(function (data) {
-                    var file = { size: data.size, name: data.name, type: data.mimetype };
-                    var url = data.url;
-                    _this3.$refs.myVueDropzone.manuallyAddFile(file, url);
-                });
-                _this3.$refs.myVueDropzone.enable();
-                _this3.uploadInitLoading = false;
-            });
-        },
-        getMain: function getMain() {
-            var _this4 = this;
-
-            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/get/' + this.$route.params.id).then(function (response) {
-                _this4.mainTitle = response.data.data.main_configurator_item_title;
-                _this4.mainVariantId = _this4.products[_this4.products.findIndex(function (current) {
-                    if (parseInt(current.variant_id) === parseInt(response.data.data.main_configurator_item_variant_id)) {
-                        return true;
-                    }
-                })];
-
-                var title = JSON.parse(response.data.data.main_configurator_item_title);
-                _this4.languages.forEach(function (x) {
-                    if (title[x]) {
-                        _this4.selectedLanguages[x] = true;
-                    }
-                });
-                _this4.mainProduct.title = title;
-                _this4.mainProduct.mainDescription = JSON.parse(response.data.data.main_configurator_item_description);
-                _this4.mainProduct.variantDescription = JSON.parse(response.data.data.configurator_item_variants_description);
-            });
-        },
-        getVariants: function getVariants() {
-            var _this5 = this;
-
-            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/variants/get').then(function (response) {
-                _this5.variants = response.data.data;
-                _this5.getProducts();
-            });
-        },
-        getProducts: function getProducts() {
-            var _this6 = this;
-
-            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/variants/get/products').then(function (response) {
-                _this6.variants.forEach(function (variant) {
-                    response.data.mockups.find(function (x) {
-                        if (parseInt(x.mockup_id) === parseInt(variant.mockup_id)) {
-                            response.data.products.find(function (product) {
-                                if (parseInt(product.id) === parseInt(x.product_id)) {
-                                    _this6.products.push({
-                                        id: product.id,
-                                        configurator_item_id: variant.configurator_item_id,
-                                        variant_id: variant.id,
-                                        title: product.title + ' ' + variant.color
-                                    });
-                                }
-                            });
-                        }
-                    });
-                });
-                _this6.mainVariantId = _this6.products[0];
-                _this6.getPatterns();
-                _this6.getMain();
-            });
-        }
-    },
-    watch: {
-        mainVariantId: function mainVariantId(val) {
-            var _this7 = this;
-
-            if (!val) return null;
-            this.variants.find(function (x) {
-                if (x.id === val.variant_id) {
-                    _this7.selectedVariant.img = x.final_image;
-                }
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "flex" }, [
-        _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }, [
-          _c("h1", { staticClass: "text-90 font-normal text-2xl" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "no-underline text-primary font-bold dim router-link-active",
-                on: {
-                  click: function($event) {
-                    return _vm.goBack()
-                  }
-                }
-              },
-              [_vm._v("←")]
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "px-2 text-70" }, [_vm._v("/")]),
-            _vm._v(" " + _vm._s(_vm.__("Place Patterns")) + "\n            ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-full flex items-center mb-6" }, [
-          _c("div", {
-            staticClass: "flex w-full justify-end items-center mx-3"
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.setMainProduct()
-                  }
-                }
-              },
-              [_vm._v(_vm._s(_vm.__("Generate")))]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "card",
-        { staticClass: "languages-select" },
-        [
-          !_vm.mainProduct.title
-            ? _c("Skeleton", {
-                attrs: { width: "3em", height: "2em", count: "4" }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.languages, function(language, index) {
-            return _vm.mainProduct.title
-              ? _c("div", { key: language, staticClass: "input" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedLanguages[language],
-                        expression: "selectedLanguages[language]"
-                      }
-                    ],
-                    staticClass: "checkbox",
-                    attrs: { type: "checkbox" },
-                    domProps: {
-                      checked: _vm.selectedLanguages[language],
-                      checked: Array.isArray(_vm.selectedLanguages[language])
-                        ? _vm._i(_vm.selectedLanguages[language], null) > -1
-                        : _vm.selectedLanguages[language]
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.selectedLanguages[language],
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = null,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 &&
-                              _vm.$set(
-                                _vm.selectedLanguages,
-                                language,
-                                $$a.concat([$$v])
-                              )
-                          } else {
-                            $$i > -1 &&
-                              _vm.$set(
-                                _vm.selectedLanguages,
-                                language,
-                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                              )
-                          }
-                        } else {
-                          _vm.$set(_vm.selectedLanguages, language, $$c)
-                        }
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-uppercase" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(language.toUpperCase()) +
-                        "\n            "
-                    )
-                  ])
-                ])
-              : _vm._e()
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c(
-        "card",
-        { staticClass: "place-pattern-card-wrapper" },
-        [
-          !_vm.mainProduct.title
-            ? _c("Skeleton", {
-                attrs: { width: "100%", height: "5em", count: "4" }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.languages, function(language, index) {
-            return _vm.mainProduct.title
-              ? _c(
-                  "div",
-                  { key: language, staticClass: "language" },
-                  [
-                    _vm.selectedLanguages[language]
-                      ? _c("card", { staticClass: "main-product-languages" }, [
-                          _c("div", { staticClass: "card-checkbox" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selectedLanguages[language],
-                                  expression: "selectedLanguages[language]"
-                                }
-                              ],
-                              staticClass: "checkbox",
-                              attrs: { type: "checkbox" },
-                              domProps: {
-                                checked: _vm.selectedLanguages[language],
-                                checked: Array.isArray(
-                                  _vm.selectedLanguages[language]
-                                )
-                                  ? _vm._i(
-                                      _vm.selectedLanguages[language],
-                                      null
-                                    ) > -1
-                                  : _vm.selectedLanguages[language]
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.selectedLanguages[language],
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          _vm.selectedLanguages,
-                                          language,
-                                          $$a.concat([$$v])
-                                        )
-                                    } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          _vm.selectedLanguages,
-                                          language,
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
-                                    }
-                                  } else {
-                                    _vm.$set(
-                                      _vm.selectedLanguages,
-                                      language,
-                                      $$c
-                                    )
-                                  }
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "card-content" }, [
-                            _c("h3", [
-                              _vm._v(
-                                _vm._s(_vm.__("Main Product Title")) +
-                                  " " +
-                                  _vm._s(language)
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.mainProduct.title[language],
-                                  expression: "mainProduct.title[language]"
-                                }
-                              ],
-                              staticClass:
-                                "form-control form-input form-input-bordered",
-                              attrs: {
-                                type: "text",
-                                placeholder: _vm.__("Main Product Title")
-                              },
-                              domProps: {
-                                value: _vm.mainProduct.title[language]
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.mainProduct.title,
-                                    language,
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mt-3" },
-                              [
-                                _c("h3", [
-                                  _vm._v(
-                                    _vm._s(_vm.__("Main Product Description")) +
-                                      " " +
-                                      _vm._s(language)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("trix-editor", {
-                                  ref: "mainDesctiptionEditor" + language,
-                                  refInFor: true,
-                                  staticClass: "trix-content",
-                                  attrs: {
-                                    value:
-                                      _vm.mainProduct.mainDescription[language],
-                                    placeholder:
-                                      _vm.__("Main Product Description") +
-                                      " in " +
-                                      language
-                                  },
-                                  on: {
-                                    keydown: function($event) {
-                                      $event.stopPropagation()
-                                    },
-                                    "trix-change": function($event) {
-                                      return _vm.handleChange(
-                                        "mainDesctiptionEditor" + language,
-                                        _vm.mainProduct.mainDescription[
-                                          language
-                                        ]
-                                      )
-                                    },
-                                    "trix-initialize": function($event) {
-                                      return _vm.initialize(
-                                        "mainDesctiptionEditor" + language,
-                                        _vm.mainProduct.mainDescription[
-                                          language
-                                        ]
-                                      )
-                                    },
-                                    "trix-attachment-add": _vm.handleAddFile,
-                                    "trix-attachment-remove":
-                                      _vm.handleRemoveFile,
-                                    "trix-file-accept": _vm.handleFileAccept
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mt-3" },
-                              [
-                                _c("h3", [
-                                  _vm._v(
-                                    _vm._s(_vm.__("Variants Description")) +
-                                      " " +
-                                      _vm._s(language)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("trix-editor", {
-                                  ref: "variantDescriptionEditor" + language,
-                                  refInFor: true,
-                                  staticClass: "trix-content",
-                                  attrs: {
-                                    value:
-                                      _vm.mainProduct.variantDescription[
-                                        language
-                                      ],
-                                    placeholder:
-                                      _vm.__("Variants Description") +
-                                      " in " +
-                                      language
-                                  },
-                                  on: {
-                                    keydown: function($event) {
-                                      $event.stopPropagation()
-                                    },
-                                    "trix-change": function($event) {
-                                      return _vm.handleChange(
-                                        "variantDescriptionEditor" + language,
-                                        _vm.mainProduct.variantDescription[
-                                          language
-                                        ]
-                                      )
-                                    },
-                                    "trix-initialize": function($event) {
-                                      return _vm.initialize(
-                                        "variantDescriptionEditor" + language,
-                                        _vm.mainProduct.variantDescription[
-                                          language
-                                        ]
-                                      )
-                                    },
-                                    "trix-attachment-add": _vm.handleAddFile,
-                                    "trix-attachment-remove":
-                                      _vm.handleRemoveFile,
-                                    "trix-file-accept": _vm.handleFileAccept
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("hr")
-                  ],
-                  1
-                )
-              : _vm._e()
-          }),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-2 mb-2" }, [
-            _vm._v(_vm._s(_vm.__("Main product preview image")))
-          ]),
-          _vm._v(" "),
-          !_vm.products[0]
-            ? _c("Skeleton", { attrs: { height: "2em", count: "1" } })
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.products[0]
-            ? _c("Skeleton", {
-                attrs: { width: "200px", height: "200px", count: "1" }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.products[0]
-            ? _c("v-select", {
-                staticStyle: { display: "block" },
-                attrs: {
-                  label: "title",
-                  index: "id",
-                  placeholder: _vm.__("Select variant"),
-                  options: _vm.products,
-                  value: _vm.products[0]
-                },
-                model: {
-                  value: _vm.mainVariantId,
-                  callback: function($$v) {
-                    _vm.mainVariantId = $$v
-                  },
-                  expression: "mainVariantId"
-                }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.selectedVariant.img && _vm.products[0]
-            ? _c(
-                "div",
-                {
-                  staticClass: "card",
-                  staticStyle: { width: "200px", height: "200px" }
-                },
-                [_c("img", { attrs: { src: _vm.selectedVariant.img } })]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("h3", [_vm._v(_vm._s(_vm.__("Additional main product images")))]),
-          _vm._v(" "),
-          _c(
-            "vue-dropzone",
-            {
-              ref: "myVueDropzone",
-              attrs: {
-                id: "dropzone",
-                options: _vm.dropzoneOptions,
-                useCustomSlot: true
-              },
-              on: {
-                "vdropzone-success": _vm.attachPattern,
-                "vdropzone-removed-file": _vm.removePattern
-              }
-            },
-            [
-              !_vm.uploadInitLoading
-                ? _c("div", { staticClass: "dropzone-custom-content" }, [
-                    _c("h3", { staticClass: "dropzone-custom-title" }, [
-                      _vm._v(_vm._s(_vm.__("Presuňte sem súbory myšou")))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "subtitle" }, [
-                      _vm._v(
-                        "..." +
-                          _vm._s(
-                            _vm.__("alebo kliknite a vyberte súbory z počítača")
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.uploadInitLoading
-                ? _c("div", { staticClass: "dropzone-custom-content" }, [
-                    _c("h3", { staticClass: "dropzone-custom-title" }, [
-                      _vm._v(_vm._s(_vm.__("Počkajte prosím...")))
-                    ])
-                  ])
-                : _vm._e()
-            ]
-          ),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-3 mb-2" }, [
-            _vm._v(_vm._s(_vm.__(":hover effect")))
-          ]),
-          _vm._v(" "),
-          _c(
-            "vue-dropzone",
-            {
-              ref: "myVueDropzone2",
-              attrs: {
-                id: "hovereffect",
-                options: _vm.dropzone2Options,
-                useCustomSlot: true
-              },
-              on: {
-                "vdropzone-success": function($event) {
-                  return _vm.console.log("ok")
-                },
-                "vdropzone-removed-file": function($event) {
-                  return _vm.console.log("ok")
-                }
-              }
-            },
-            [
-              !_vm.uploadInitLoading
-                ? _c("div", { staticClass: "dropzone-custom-content" }, [
-                    _c("h3", { staticClass: "dropzone-custom-title" }, [
-                      _vm._v(_vm._s(_vm.__("Presuňte sem súbor myšou")))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "subtitle" }, [
-                      _vm._v(
-                        "..." +
-                          _vm._s(
-                            _vm.__(
-                              "alebo kliknite a vyberte súbor z počítača v prípade, že chcete pridať hover efekt."
-                            )
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.uploadInitLoading
-                ? _c("div", { staticClass: "dropzone-custom-content" }, [
-                    _c("h3", { staticClass: "dropzone-custom-title" }, [
-                      _vm._v(_vm._s(_vm.__("Počkajte prosím...")))
-                    ])
-                  ])
-                : _vm._e()
-            ]
-          )
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex" }, [
-        _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-full flex items-center mb-6" }, [
-          _c("div", {
-            staticClass: "flex w-full justify-end items-center mx-3"
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.setMainProduct()
-                  }
-                }
-              },
-              [_vm._v(_vm._s(_vm.__("Generate")))]
-            )
-          ])
-        ])
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-22b6864a", module.exports)
-  }
-}
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(59)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(61)
-/* template */
-var __vue_template__ = __webpack_require__(62)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-fec52f40"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Generate.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fec52f40", Component.options)
-  } else {
-    hotAPI.reload("data-v-fec52f40", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(60);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("44865ad4", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fec52f40\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Generate.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fec52f40\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Generate.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.generating-wrapper[data-v-fec52f40] {\n  min-height: 50px;\n  padding: 2em;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n.completed-patterns-wrapper[data-v-fec52f40] {\n  margin-top: 2em;\n  min-height: 300px;\n  padding: 2em;\n  -webkit-box-pack: left;\n      -ms-flex-pack: left;\n          justify-content: left;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n.completed-patterns-wrapper img[data-v-fec52f40] {\n    width: 250px;\n    height: 250px;\n    -o-object-fit: contain;\n       object-fit: contain;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__ = __webpack_require__(4);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        Skeleton: __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__["a" /* Skeleton */]
-    },
-    data: function data() {
-        return {
-            variants: [],
-            status: '',
-            download: '',
-            enableRefresh: false
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.exportReady();
-        setInterval(function () {
-            return _this.refresh();
-        }, 1000);
-    },
-
-    methods: {
-        exportReady: function exportReady() {
-            var _this2 = this;
-
-            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/export_ready/' + this.$route.params.id).then(function (response) {
-                _this2.status = response.data.status;
-                if (response.data.status === 5) {
-                    _this2.enableRefresh = true;
-                }
-                if (response.data.status === 6) {
-                    _this2.$toasted.show('Prebieha generovanie produktov.. Prosím čakajte', { type: 'info' });
-                    _this2.enableRefresh = true;
-                }
-                if (response.data.status === 7) {
-                    _this2.enableRefresh = false;
-                }
-                _this2.variants = response.data.variants;
-            });
-        },
-        downloadCsv: function downloadCsv() {
-            this.download = window.location.origin + '/nova-vendor/laravel-magento-variant-generator/csv/' + this.$route.params.id;
-        },
-        refresh: function refresh() {
-            if (this.enableRefresh === true) {
-                this.exportReady();
-            }
-        }
-    }
-});
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "flex" }, [
-        _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }, [
-          _c("h1", { staticClass: "text-90 font-normal text-2xl" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "no-underline text-primary font-bold dim router-link-active",
-                on: {
-                  click: function($event) {
-                    return _vm.$router.push(
-                      "/laravel-magento-variant-generator-main-product/" +
-                        _vm.$route.params.id
-                    )
-                  }
-                }
-              },
-              [_vm._v("←")]
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "px-2 text-70" }, [_vm._v("/")]),
-            _vm._v(" " + _vm._s(_vm.__("Main Product")) + "\n            ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-full flex items-center mb-6" }, [
-          _c("div", {
-            staticClass: "flex w-full justify-end items-center mx-3"
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
-            _c("button", { staticClass: "btn btn-default btn-primary" }, [
-              _vm._v(_vm._s(_vm.__("New Product")))
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("card", { staticClass: "generating-wrapper" }, [
-        _vm.status === 7
-          ? _c("span", { staticClass: "text-center" }, [
-              _c("h1", { staticClass: "text-center" }, [
-                _vm._v(_vm._s(_vm.__("Produkty boli vygenerované")))
-              ]),
-              _vm._v(" "),
-              _c("h3", { staticClass: "text-center" }, [
-                _vm._v(
-                  _vm._s(
-                    _vm.__(
-                      "Stránku môžete bezpečne opustiť. CSV súbor si môžete stiahnúť tu."
-                    )
-                  )
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  staticStyle: {
-                    "text-align": "center",
-                    padding: "1em",
-                    margin: "1em",
-                    "border-radius": "15px"
-                  },
-                  on: { click: _vm.downloadCsv }
-                },
-                [_vm._v(_vm._s(_vm.__("Stiahnúť CSV")))]
-              )
-            ])
-          : _c(
-              "span",
-              [
-                _c("h1", { staticClass: "text-center" }, [
-                  _vm._v(_vm._s(_vm.__("Produkty zaradené do exportu")))
-                ]),
-                _vm._v(" "),
-                _c("Skeleton")
-              ],
-              1
-            )
-      ]),
-      _vm._v(" "),
-      _c(
-        "card",
-        { staticClass: "completed-patterns-wrapper" },
-        [
-          _vm.variants.length < 1
-            ? _c("Skeleton", {
-                attrs: { width: "250px", height: "250px", count: "6" }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.variants, function(variant) {
-            return _c("img", {
-              key: variant.id,
-              attrs: { src: variant.final_image }
-            })
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("iframe", {
-        staticStyle: { display: "none" },
-        attrs: { src: _vm.download }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fec52f40", module.exports)
-  }
-}
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(75);
+var content = __webpack_require__(52);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -37668,7 +36153,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(7)(content, options);
+var update = __webpack_require__(5)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -37685,7 +36170,7 @@ if(false) {
 }
 
 /***/ }),
-/* 75 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -37699,7 +36184,7 @@ exports.push([module.i, ".vue-range-slider.slider-component {\n  position: relat
 
 
 /***/ }),
-/* 76 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39086,6 +37571,1622 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 /* harmony default export */ __webpack_exports__["a"] = (Slider);
 
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "card",
+    { staticClass: "bg-50 place-pattern-card" },
+    [
+      _c("div", { staticClass: "place-pattern-card-title" }, [
+        _c("h4", [_vm._v(_vm._s(_vm.mockup.title))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "fabric-library-box" }, [
+        _c("canvas", {
+          staticClass: "fabric-library-box-canvas",
+          attrs: { id: "canvas" + _vm.mockup.id, width: "566", height: "566" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("v-select", {
+        staticClass: "place-pattern-card-select",
+        attrs: { label: "title", options: _vm.siblings },
+        model: {
+          value: _vm.selectBox,
+          callback: function($$v) {
+            _vm.selectBox = $$v
+          },
+          expression: "selectBox"
+        }
+      }),
+      _vm._v(" "),
+      _c("vue-range-slider", {
+        ref: "slider",
+        staticClass: "range-slider",
+        on: { "drag-end": _vm.changeOpacity },
+        model: {
+          value: _vm.opacity,
+          callback: function($$v) {
+            _vm.opacity = $$v
+          },
+          expression: "opacity"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-65945221", module.exports)
+  }
+}
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "flex" }, [
+        _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }, [
+          _c("h1", { staticClass: "text-90 font-normal text-2xl" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "no-underline text-primary font-bold dim router-link-active",
+                on: {
+                  click: function($event) {
+                    return _vm.$router.push(
+                      "/laravel-magento-variant-generator-variants/" +
+                        _vm.$route.params.id
+                    )
+                  }
+                }
+              },
+              [_vm._v("←")]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "px-2 text-70" }, [_vm._v("/")]),
+            _vm._v(" " + _vm._s(_vm.__("Variants")) + "\n            ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full flex items-center mb-6" }, [
+          _c("div", {
+            staticClass: "flex w-full justify-end items-center mx-3"
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-primary",
+                on: { click: _vm.setPatterns }
+              },
+              [_vm._v(_vm._s(_vm.__("Main Product")))]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "card",
+        { staticClass: "place-pattern-card-wrapper" },
+        [
+          _vm.mockups.length < 1
+            ? _c(
+                "div",
+                { staticClass: "skeletons" },
+                [
+                  _c("Skeleton", { attrs: { width: "120px", height: "10px" } }),
+                  _vm._v(" "),
+                  _c("Skeleton", {
+                    attrs: { width: "600px", height: "600px" }
+                  }),
+                  _vm._v(" "),
+                  _c("Skeleton", { attrs: { width: "600px", height: "30px" } })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.mockups.length < 1
+            ? _c(
+                "div",
+                { staticClass: "skeletons" },
+                [
+                  _c("Skeleton", { attrs: { width: "120px", height: "10px" } }),
+                  _vm._v(" "),
+                  _c("Skeleton", {
+                    attrs: { width: "600px", height: "600px" }
+                  }),
+                  _vm._v(" "),
+                  _c("Skeleton", { attrs: { width: "600px", height: "30px" } })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.mockups, function(mockup) {
+            return _c("FabricPattern", {
+              key: mockup.id,
+              attrs: { mockup: mockup }
+            })
+          })
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3bbb58a2", module.exports)
+  }
+}
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(57)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(59)
+/* template */
+var __vue_template__ = __webpack_require__(60)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-22b6864a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/MainProduct.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-22b6864a", Component.options)
+  } else {
+    hotAPI.reload("data-v-22b6864a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(58);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("6b0655d8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-22b6864a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainProduct.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-22b6864a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainProduct.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.languages-select[data-v-22b6864a] {\n  padding: 2em;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n.languages-select .input[data-v-22b6864a] {\n    padding: 1em;\n}\n.languages-select[data-v-22b6864a] .pu-skeleton {\n    margin-right: 1em;\n}\n.place-pattern-card-wrapper[data-v-22b6864a] {\n  min-height: 300px;\n  padding: 2em;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.place-pattern-card-wrapper input[data-v-22b6864a] {\n    width: 50%;\n}\n.place-pattern-card-wrapper .v-select[data-v-22b6864a] {\n    width: 50%;\n}\n.place-pattern-card-wrapper[data-v-22b6864a] .pu-skeleton {\n    margin-top: 1em;\n    margin-bottom: 1em;\n    display: block;\n}\n.language[data-v-22b6864a] {\n  width: 100%;\n}\n.language .main-product-languages[data-v-22b6864a] {\n    width: 70%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n}\n.language .main-product-languages .card-checkbox input[data-v-22b6864a] {\n      height: 100%;\n      width: 7em;\n}\n.language .main-product-languages .card-content[data-v-22b6864a] {\n      width: 100%;\n      padding: 2em;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n.language .main-product-languages .card-content textarea[data-v-22b6864a] {\n        height: 10em;\n}\n#dropzone[data-v-22b6864a] {\n  width: 100%;\n  margin-top: 1em;\n}\n.main-product-creating[data-v-22b6864a] {\n  height: 30em;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_select__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_select_dist_vue_select_css__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_select_dist_vue_select_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_select_dist_vue_select_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue2_dropzone__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue2_dropzone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue2_dropzone__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue2_dropzone_dist_vue2Dropzone_min_css__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue2_dropzone_dist_vue2Dropzone_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue2_dropzone_dist_vue2Dropzone_min_css__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Skeleton: __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__["a" /* Skeleton */],
+        vSelect: __WEBPACK_IMPORTED_MODULE_1_vue_select___default.a,
+        vueDropzone: __WEBPACK_IMPORTED_MODULE_3_vue2_dropzone___default.a
+    },
+    data: function data() {
+        return {
+            uploadInitLoading: true,
+            dropzoneOptions: {
+                url: "https://httpbin.org/post",
+                thumbnailWidth: 150,
+                addRemoveLinks: true,
+                headers: { 'Content-Type': 'multipart/form-data' }
+            },
+            dropzone2Options: {
+                url: "https://httpbin.org/post",
+                thumbnailWidth: 150,
+                addRemoveLinks: true,
+                headers: { 'Content-Type': 'multipart/form-data' },
+                maxFiles: 1
+            },
+            mainProduct: [],
+            mainVariantId: [],
+            variants: [],
+            products: [],
+            disableRemove: false,
+            languages: ['sk', 'cz', 'hu', 'ro'],
+            selectedLanguages: {
+                sk: true,
+                cz: false,
+                hu: false,
+                ro: false
+            },
+            selectedVariant: [],
+            showInputs: false,
+            hideAll: true
+        };
+    },
+    mounted: function mounted() {
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        if (urlParams.get('forceRefresh')) {
+            this.hideAll = true;
+            var currentUrl = window.location.href;
+            currentUrl = this.removeURLParameter(currentUrl, 'forceRefresh');
+
+            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/variants/set/main_info').then(function (response) {
+                window.location = currentUrl;
+            });
+            return;
+        } else {
+            this.hideAll = false;
+            this.getVariants();
+        }
+    },
+
+    methods: {
+        initialize: function initialize(ref, value) {
+            this.$refs[ref][0].editor.insertHTML(value);
+
+            if (this.disabled) {
+                this.$refs[ref][0].setAttribute('contenteditable', false);
+            }
+        },
+        handleChange: function handleChange(ref, value) {
+            this.$emit('change', value);
+        },
+        handleFileAccept: function handleFileAccept(e) {
+            if (!this.withFiles) {
+                e.preventDefault();
+            }
+        },
+        handleAddFile: function handleAddFile(event) {
+            this.$emit('file-add', event);
+        },
+        handleRemoveFile: function handleRemoveFile(event) {
+            this.$emit('file-remove', event);
+        },
+        setMainProduct: function setMainProduct() {
+            var _this = this;
+
+            this.disableRemove = true;
+            var formData = new FormData();
+            formData.append('main_configurator_item_variant_id', this.mainVariantId.variant_id);
+
+            this.languages.forEach(function (language) {
+                if (!_this.selectedLanguages[language]) return;
+                _this.mainProduct.title[language] = _this.mainProduct.title[language] ? _this.mainProduct.title[language] : null;
+                formData.append('main_configurator_item_title_' + language, _this.mainProduct.title[language]);
+                formData.append('main_configurator_item_description_' + language, _this.$refs['mainDesctiptionEditor' + language][0].value);
+                formData.append('configurator_item_variants_description_' + language, _this.$refs['variantDescriptionEditor' + language][0].value);
+            });
+            var config = {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            };
+            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/set/main', formData, config).then(function (response) {
+                _this.$router.push('/laravel-magento-variant-generator-generate/' + _this.$route.params.id);
+            });
+        },
+        goBack: function goBack() {
+            this.disableRemove = true;
+            this.$router.push('/laravel-magento-variant-generator-place-patterns/' + this.$route.params.id);
+        },
+        attachPattern: function attachPattern(file, response) {
+            var formData = new FormData();
+            formData.append('file', file);
+            var config = {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            };
+            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/setimages/main', formData, config).then(function (response) {});
+        },
+        removePattern: function removePattern(file, error, xhr) {
+            var _this2 = this;
+
+            if (this.disableRemove === true) return;
+            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/deleteimages/main', {
+                filename: file.name
+            }).then(function (response) {
+                _this2.$toasted.show('File removed', { type: 'success' });
+            });
+        },
+        getPatterns: function getPatterns() {
+            var _this3 = this;
+
+            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/getimages/main').then(function (response) {
+                response.data.forEach(function (data) {
+                    var file = { size: data.size, name: data.name, type: data.mimetype };
+                    var url = data.url;
+                    _this3.$refs.myVueDropzone.manuallyAddFile(file, url);
+                });
+                _this3.$refs.myVueDropzone.enable();
+                _this3.uploadInitLoading = false;
+            });
+        },
+        getMain: function getMain() {
+            var _this4 = this;
+
+            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/get/' + this.$route.params.id).then(function (response) {
+                _this4.mainTitle = response.data.data.main_configurator_item_title;
+                _this4.mainVariantId = _this4.products[_this4.products.findIndex(function (current) {
+                    if (parseInt(current.variant_id) === parseInt(response.data.data.main_configurator_item_variant_id)) {
+                        return true;
+                    }
+                })];
+
+                var title = JSON.parse(response.data.data.main_configurator_item_title);
+                _this4.languages.forEach(function (x) {
+                    if (title[x]) {
+                        _this4.selectedLanguages[x] = true;
+                    }
+                });
+                _this4.mainProduct.title = title;
+                _this4.mainProduct.mainDescription = JSON.parse(response.data.data.main_configurator_item_description);
+                _this4.mainProduct.variantDescription = JSON.parse(response.data.data.configurator_item_variants_description);
+                _this4.showInputs = true;
+            });
+        },
+        getVariants: function getVariants() {
+            var _this5 = this;
+
+            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/variants/get').then(function (response) {
+                _this5.variants = response.data.data;
+                _this5.getProducts();
+            });
+        },
+        getProducts: function getProducts() {
+            var _this6 = this;
+
+            Nova.request().get('/nova-vendor/laravel-magento-variant-generator/' + this.$route.params.id + '/variants/get/products').then(function (response) {
+                _this6.variants.forEach(function (variant) {
+                    response.data.mockups.find(function (x) {
+                        if (parseInt(x.mockup_id) === parseInt(variant.mockup_id)) {
+                            response.data.products.find(function (product) {
+                                if (parseInt(product.id) === parseInt(x.product_id)) {
+                                    _this6.products.push({
+                                        id: product.id,
+                                        configurator_item_id: variant.configurator_item_id,
+                                        variant_id: variant.id,
+                                        title: product.title + ' ' + variant.color
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+                _this6.mainVariantId = _this6.products[0];
+                _this6.getPatterns();
+                _this6.getMain();
+            });
+        },
+        removeURLParameter: function removeURLParameter(url, parameter) {
+            //prefer to use l.search if you have a location/link object
+            var urlparts = url.split('?');
+            if (urlparts.length >= 2) {
+
+                var prefix = encodeURIComponent(parameter) + '=';
+                var pars = urlparts[1].split(/[&;]/g);
+
+                //reverse iteration as may be destructive
+                for (var i = pars.length; i-- > 0;) {
+                    //idiom for string.startsWith
+                    if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                        pars.splice(i, 1);
+                    }
+                }
+
+                return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+            }
+            return url;
+        }
+    },
+    watch: {
+        mainVariantId: function mainVariantId(val) {
+            var _this7 = this;
+
+            if (!val) return null;
+            this.variants.find(function (x) {
+                if (x.id === val.variant_id) {
+                    _this7.selectedVariant.img = x.final_image;
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.hideAll
+      ? _c(
+          "div",
+          [
+            _c("card", { staticClass: "main-product-creating" }, [
+              _c("h1", [
+                _vm._v(_vm._s(_vm.__("Generating main product options")))
+              ]),
+              _vm._v(" "),
+              _c("h2", [_vm._v(_vm._s(_vm.__("please wait...")))])
+            ])
+          ],
+          1
+        )
+      : _c(
+          "div",
+          [
+            _c("div", { staticClass: "flex" }, [
+              _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }, [
+                _c("h1", { staticClass: "text-90 font-normal text-2xl" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "no-underline text-primary font-bold dim router-link-active",
+                      on: {
+                        click: function($event) {
+                          return _vm.goBack()
+                        }
+                      }
+                    },
+                    [_vm._v("←")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "px-2 text-70" }, [_vm._v("/")]),
+                  _vm._v(
+                    " " +
+                      _vm._s(_vm.__("Place Patterns")) +
+                      "\n                "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-full flex items-center mb-6" }, [
+                _c("div", {
+                  staticClass: "flex w-full justify-end items-center mx-3"
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default btn-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.setMainProduct()
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.__("Generate")))]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "card",
+              { staticClass: "languages-select" },
+              [
+                !_vm.mainProduct.title
+                  ? _c("Skeleton", {
+                      attrs: { width: "3em", height: "2em", count: "4" }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.languages, function(language, index) {
+                  return _vm.mainProduct.title
+                    ? _c("div", { key: language, staticClass: "input" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedLanguages[language],
+                              expression: "selectedLanguages[language]"
+                            }
+                          ],
+                          staticClass: "checkbox",
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            checked: _vm.selectedLanguages[language],
+                            checked: Array.isArray(
+                              _vm.selectedLanguages[language]
+                            )
+                              ? _vm._i(_vm.selectedLanguages[language], null) >
+                                -1
+                              : _vm.selectedLanguages[language]
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.selectedLanguages[language],
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.selectedLanguages,
+                                      language,
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.selectedLanguages,
+                                      language,
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.selectedLanguages, language, $$c)
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-uppercase" }, [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(language.toUpperCase()) +
+                              "\n            "
+                          )
+                        ])
+                      ])
+                    : _vm._e()
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "card",
+              { staticClass: "place-pattern-card-wrapper" },
+              [
+                !_vm.showInputs
+                  ? _c("Skeleton", {
+                      attrs: { width: "100%", height: "5em", count: "4" }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.languages, function(language, index) {
+                  return _vm.showInputs
+                    ? _c(
+                        "div",
+                        { key: language, staticClass: "language" },
+                        [
+                          _vm.selectedLanguages[language]
+                            ? _c(
+                                "card",
+                                { staticClass: "main-product-languages" },
+                                [
+                                  _c("div", { staticClass: "card-checkbox" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.selectedLanguages[language],
+                                          expression:
+                                            "selectedLanguages[language]"
+                                        }
+                                      ],
+                                      staticClass: "checkbox",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked:
+                                          _vm.selectedLanguages[language],
+                                        checked: Array.isArray(
+                                          _vm.selectedLanguages[language]
+                                        )
+                                          ? _vm._i(
+                                              _vm.selectedLanguages[language],
+                                              null
+                                            ) > -1
+                                          : _vm.selectedLanguages[language]
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a =
+                                              _vm.selectedLanguages[language],
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.selectedLanguages,
+                                                  language,
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.selectedLanguages,
+                                                  language,
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.selectedLanguages,
+                                              language,
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "card-content" }, [
+                                    _c("h3", [
+                                      _vm._v(
+                                        _vm._s(_vm.__("Main Product Title")) +
+                                          " " +
+                                          _vm._s(language)
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.mainProduct.title[language],
+                                          expression:
+                                            "mainProduct.title[language]"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "form-control form-input form-input-bordered",
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: _vm.__(
+                                          "Main Product Title"
+                                        )
+                                      },
+                                      domProps: {
+                                        value: _vm.mainProduct.title[language]
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.mainProduct.title,
+                                            language,
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "mt-3" },
+                                      [
+                                        _c("h3", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.__("Main Product Description")
+                                            ) +
+                                              " " +
+                                              _vm._s(language)
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("trix-editor", {
+                                          ref:
+                                            "mainDesctiptionEditor" + language,
+                                          refInFor: true,
+                                          staticClass: "trix-content",
+                                          attrs: {
+                                            value:
+                                              _vm.mainProduct.mainDescription[
+                                                language
+                                              ],
+                                            placeholder:
+                                              _vm.__(
+                                                "Main Product Description"
+                                              ) +
+                                              " in " +
+                                              language
+                                          },
+                                          on: {
+                                            keydown: function($event) {
+                                              $event.stopPropagation()
+                                            },
+                                            "trix-change": function($event) {
+                                              return _vm.handleChange(
+                                                "mainDesctiptionEditor" +
+                                                  language,
+                                                _vm.mainProduct.mainDescription[
+                                                  language
+                                                ]
+                                              )
+                                            },
+                                            "trix-initialize": function(
+                                              $event
+                                            ) {
+                                              return _vm.initialize(
+                                                "mainDesctiptionEditor" +
+                                                  language,
+                                                _vm.mainProduct.mainDescription[
+                                                  language
+                                                ]
+                                              )
+                                            },
+                                            "trix-attachment-add":
+                                              _vm.handleAddFile,
+                                            "trix-attachment-remove":
+                                              _vm.handleRemoveFile,
+                                            "trix-file-accept":
+                                              _vm.handleFileAccept
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "mt-3" },
+                                      [
+                                        _c("h3", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.__("Variants Description")
+                                            ) +
+                                              " " +
+                                              _vm._s(language)
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("trix-editor", {
+                                          ref:
+                                            "variantDescriptionEditor" +
+                                            language,
+                                          refInFor: true,
+                                          staticClass: "trix-content",
+                                          attrs: {
+                                            value:
+                                              _vm.mainProduct
+                                                .variantDescription[language],
+                                            placeholder:
+                                              _vm.__("Variants Description") +
+                                              " in " +
+                                              language
+                                          },
+                                          on: {
+                                            keydown: function($event) {
+                                              $event.stopPropagation()
+                                            },
+                                            "trix-change": function($event) {
+                                              return _vm.handleChange(
+                                                "variantDescriptionEditor" +
+                                                  language,
+                                                _vm.mainProduct
+                                                  .variantDescription[language]
+                                              )
+                                            },
+                                            "trix-initialize": function(
+                                              $event
+                                            ) {
+                                              return _vm.initialize(
+                                                "variantDescriptionEditor" +
+                                                  language,
+                                                _vm.mainProduct
+                                                  .variantDescription[language]
+                                              )
+                                            },
+                                            "trix-attachment-add":
+                                              _vm.handleAddFile,
+                                            "trix-attachment-remove":
+                                              _vm.handleRemoveFile,
+                                            "trix-file-accept":
+                                              _vm.handleFileAccept
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("hr")
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                }),
+                _vm._v(" "),
+                _c("h3", { staticClass: "mt-2 mb-2" }, [
+                  _vm._v(_vm._s(_vm.__("Main product preview image")))
+                ]),
+                _vm._v(" "),
+                !_vm.products[0]
+                  ? _c("Skeleton", { attrs: { height: "2em", count: "1" } })
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.products[0]
+                  ? _c("Skeleton", {
+                      attrs: { width: "200px", height: "200px", count: "1" }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.products[0]
+                  ? _c("v-select", {
+                      staticStyle: { display: "block" },
+                      attrs: {
+                        label: "title",
+                        index: "id",
+                        placeholder: _vm.__("Select variant"),
+                        options: _vm.products,
+                        value: _vm.products[0]
+                      },
+                      model: {
+                        value: _vm.mainVariantId,
+                        callback: function($$v) {
+                          _vm.mainVariantId = $$v
+                        },
+                        expression: "mainVariantId"
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.selectedVariant.img && _vm.products[0]
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "card",
+                        staticStyle: { width: "200px", height: "200px" }
+                      },
+                      [_c("img", { attrs: { src: _vm.selectedVariant.img } })]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("h3", [
+                  _vm._v(_vm._s(_vm.__("Additional main product images")))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "vue-dropzone",
+                  {
+                    ref: "myVueDropzone",
+                    attrs: {
+                      id: "dropzone",
+                      options: _vm.dropzoneOptions,
+                      useCustomSlot: true
+                    },
+                    on: {
+                      "vdropzone-success": _vm.attachPattern,
+                      "vdropzone-removed-file": _vm.removePattern
+                    }
+                  },
+                  [
+                    !_vm.uploadInitLoading
+                      ? _c("div", { staticClass: "dropzone-custom-content" }, [
+                          _c("h3", { staticClass: "dropzone-custom-title" }, [
+                            _vm._v(_vm._s(_vm.__("Presuňte sem súbory myšou")))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "subtitle" }, [
+                            _vm._v(
+                              "..." +
+                                _vm._s(
+                                  _vm.__(
+                                    "alebo kliknite a vyberte súbory z počítača"
+                                  )
+                                )
+                            )
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.uploadInitLoading
+                      ? _c("div", { staticClass: "dropzone-custom-content" }, [
+                          _c("h3", { staticClass: "dropzone-custom-title" }, [
+                            _vm._v(_vm._s(_vm.__("Počkajte prosím...")))
+                          ])
+                        ])
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c("h3", { staticClass: "mt-3 mb-2" }, [
+                  _vm._v(_vm._s(_vm.__(":hover effect")))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "vue-dropzone",
+                  {
+                    ref: "myVueDropzone2",
+                    attrs: {
+                      id: "hovereffect",
+                      options: _vm.dropzone2Options,
+                      useCustomSlot: true
+                    },
+                    on: {
+                      "vdropzone-success": function($event) {
+                        return _vm.console.log("ok")
+                      },
+                      "vdropzone-removed-file": function($event) {
+                        return _vm.console.log("ok")
+                      }
+                    }
+                  },
+                  [
+                    !_vm.uploadInitLoading
+                      ? _c("div", { staticClass: "dropzone-custom-content" }, [
+                          _c("h3", { staticClass: "dropzone-custom-title" }, [
+                            _vm._v(_vm._s(_vm.__("Presuňte sem súbor myšou")))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "subtitle" }, [
+                            _vm._v(
+                              "..." +
+                                _vm._s(
+                                  _vm.__(
+                                    "alebo kliknite a vyberte súbor z počítača v prípade, že chcete pridať hover efekt."
+                                  )
+                                )
+                            )
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.uploadInitLoading
+                      ? _c("div", { staticClass: "dropzone-custom-content" }, [
+                          _c("h3", { staticClass: "dropzone-custom-title" }, [
+                            _vm._v(_vm._s(_vm.__("Počkajte prosím...")))
+                          ])
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex" }, [
+              _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-full flex items-center mb-6" }, [
+                _c("div", {
+                  staticClass: "flex w-full justify-end items-center mx-3"
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default btn-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.setMainProduct()
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.__("Generate")))]
+                  )
+                ])
+              ])
+            ])
+          ],
+          1
+        )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-22b6864a", module.exports)
+  }
+}
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(62)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(64)
+/* template */
+var __vue_template__ = __webpack_require__(65)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-fec52f40"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Generate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fec52f40", Component.options)
+  } else {
+    hotAPI.reload("data-v-fec52f40", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(63);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("44865ad4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fec52f40\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Generate.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fec52f40\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Generate.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.generating-wrapper[data-v-fec52f40] {\n  min-height: 50px;\n  padding: 2em;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n.completed-patterns-wrapper[data-v-fec52f40] {\n  margin-top: 2em;\n  min-height: 300px;\n  padding: 2em;\n  -webkit-box-pack: left;\n      -ms-flex-pack: left;\n          justify-content: left;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n}\n.completed-patterns-wrapper img[data-v-fec52f40] {\n    width: 250px;\n    height: 250px;\n    -o-object-fit: contain;\n       object-fit: contain;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Skeleton: __WEBPACK_IMPORTED_MODULE_0_vue_loading_skeleton__["a" /* Skeleton */]
+    },
+    data: function data() {
+        return {
+            variants: [],
+            status: '',
+            download: '',
+            enableRefresh: false
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.exportReady();
+        setInterval(function () {
+            return _this.refresh();
+        }, 10000);
+    },
+
+    methods: {
+        exportReady: function exportReady() {
+            var _this2 = this;
+
+            Nova.request().post('/nova-vendor/laravel-magento-variant-generator/export_ready/' + this.$route.params.id).then(function (response) {
+                _this2.status = response.data.status;
+                if (_this2.status === 4) {
+                    _this2.$toasted.show('Products added to queue. You can leave this page right now.', { type: 'info' });
+                    _this2.enableRefresh = true;
+                    _this2.variants = [];
+                }
+                if (_this2.status === 5 || _this2.status === 6 || _this2.status === 7 || _this2.status === 8 || _this2.status === 9) {
+                    _this2.$toasted.show('Product generating... We will notify you, when the products will be ready.', { type: 'info' });
+                    _this2.enableRefresh = true;
+                    _this2.variants = [];
+                }
+                if (_this2.status === 10) {
+                    _this2.enableRefresh = false;
+                    _this2.variants = response.data.variants;
+                }
+                if (_this2.status === 11) {
+                    _this2.enableRefresh = false;
+                    _this2.variants = response.data.variants;
+                }
+            });
+        },
+        downloadCsv: function downloadCsv() {
+            this.download = window.location.origin + '/nova-vendor/laravel-magento-variant-generator/csv/' + this.$route.params.id;
+        },
+        refresh: function refresh() {
+            if (this.enableRefresh === true) {
+                this.exportReady();
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "flex" }, [
+        _c("div", { staticClass: "relative h-9 flex-no-shrink mb-6" }, [
+          _c("h1", { staticClass: "text-90 font-normal text-2xl" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "no-underline text-primary font-bold dim router-link-active",
+                on: {
+                  click: function($event) {
+                    return _vm.$router.push(
+                      "/laravel-magento-variant-generator-main-product/" +
+                        _vm.$route.params.id
+                    )
+                  }
+                }
+              },
+              [_vm._v("←")]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "px-2 text-70" }, [_vm._v("/")]),
+            _vm._v(" " + _vm._s(_vm.__("Main Product")) + "\n            ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full flex items-center mb-6" }, [
+          _c("div", {
+            staticClass: "flex w-full justify-end items-center mx-3"
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex-no-shrink ml-auto" }, [
+            _c("button", { staticClass: "btn btn-default btn-primary" }, [
+              _vm._v(_vm._s(_vm.__("New Product")))
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("card", { staticClass: "generating-wrapper" }, [
+        _vm.status === 11
+          ? _c("span", { staticClass: "text-center" }, [
+              _c("h1", { staticClass: "text-center" }, [
+                _vm._v(_vm._s(_vm.__("Produkty boli vygenerované")))
+              ]),
+              _vm._v(" "),
+              _c("h3", { staticClass: "text-center" }, [
+                _vm._v(
+                  _vm._s(
+                    _vm.__(
+                      "Stránku môžete bezpečne opustiť. CSV súbor si môžete stiahnúť tu."
+                    )
+                  )
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  staticStyle: {
+                    "text-align": "center",
+                    padding: "1em",
+                    margin: "1em",
+                    "border-radius": "15px"
+                  },
+                  on: { click: _vm.downloadCsv }
+                },
+                [_vm._v(_vm._s(_vm.__("Stiahnúť CSV")))]
+              )
+            ])
+          : _c(
+              "span",
+              [
+                _c("h1", { staticClass: "text-center" }, [
+                  _vm._v(_vm._s(_vm.__("Produkty zaradené do exportu")))
+                ]),
+                _vm._v(" "),
+                _c("Skeleton")
+              ],
+              1
+            )
+      ]),
+      _vm._v(" "),
+      _c(
+        "card",
+        { staticClass: "completed-patterns-wrapper" },
+        [
+          _vm.variants.length < 1
+            ? _c("Skeleton", {
+                attrs: { width: "250px", height: "250px", count: "6" }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.variants, function(variant) {
+            return _c("img", {
+              key: variant.id,
+              attrs: { src: variant.final_image }
+            })
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("iframe", {
+        staticStyle: { display: "none" },
+        attrs: { src: _vm.download }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fec52f40", module.exports)
+  }
+}
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
